@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "410771624147",
+    "project_id": "sbkzbailas",
+    "storage_bucket": "sbkzbailas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410771624147:android:43ccedb4f0ac1c6aa74426",
+        "android_client_info": {
+          "package_name": "com.example.sbk_bailas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410771624147-ta5dtmcmqhf7o9lk5e784vfv03hqd2dq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDx_S1BFnZvtQ6pPfqx5ghlx0l-7feK0IA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410771624147-ta5dtmcmqhf7o9lk5e784vfv03hqd2dq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "410771624147-18gpph97latjnspub7dd516k4q6aism5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sbkBailas"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
