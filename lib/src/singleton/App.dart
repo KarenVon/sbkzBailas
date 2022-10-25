@@ -10,15 +10,13 @@ import '../Home_Views/Login_View.dart';
 class App extends StatelessWidget{
 
   const App({Key? key}) : super(key:key);
-  String getInitalRoute(){
-      return '/loginview';
-  }
+
   @override
   Widget build(BuildContext context) {
 
     return MaterialApp(
       title: 'Tu aplicación de baile',
-      initialRoute: getInitalRoute(),
+      initialRoute: '/sbkapp',
       routes: {
         '/sbkapp':(context) => sbkApp(),
         '/loginview':(context) => Login_View(),
