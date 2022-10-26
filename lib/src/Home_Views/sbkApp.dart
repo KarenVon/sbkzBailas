@@ -16,13 +16,18 @@ class sbkApp extends StatefulWidget {
     final screens=[
       Eventos_View(),
       Login_View(),
+      sbkApp(),
+      Center(child: Text('Consultas', style: TextStyle(fontSize: 60))),
     ];
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
    return MaterialApp(
      home: Scaffold(
-       body: Container(
+       body: screens[currentIndex],
+       drawer:
+       Container(
          decoration:const BoxDecoration(
            gradient: LinearGradient(
              begin: Alignment.topCenter,
@@ -53,12 +58,12 @@ class sbkApp extends StatefulWidget {
          ),
        ),
 
-
            bottomNavigationBar: BottomNavigationBar(
              type: BottomNavigationBarType.fixed,
              backgroundColor: Colors.cyan,
              selectedItemColor: Colors.white,
              unselectedItemColor: Colors.white.withOpacity(.60),
+             showUnselectedLabels: false,
              selectedFontSize: 14,
              unselectedFontSize: 14,
              //indice para seleccionar los diferentes botones del bottomNavigationBar
@@ -82,6 +87,7 @@ class sbkApp extends StatefulWidget {
                  label: 'Contacta',
                ),
              ],
+
            ),
     ),
    );

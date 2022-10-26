@@ -25,13 +25,19 @@ class KVInputText extends StatelessWidget{
     return _controller.text;
   }
 
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return TextFormField(
+      //controller: para extraer los datos que el usuario haya ingresado
+      controller: _controller,
       cursorColor: Colors.cyan,
-      initialValue: this.sValorInicial,
+      //initialValue: this.sValorInicial, hay que quitarlo al meter el controller
       maxLength: iLongitudPalabra,
+      obscureText: blIsPasswordInput,
+      enableSuggestions: !blIsPasswordInput,
+      autocorrect: !blIsPasswordInput,
       decoration: InputDecoration(
         icon: this.icIzq,
         labelText: this.sTitulo,
