@@ -90,7 +90,10 @@ class Login_View extends StatelessWidget {
                     textStyle: const TextStyle(fontSize: 12,
                         color: Colors.white,fontWeight:FontWeight.bold ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    print("Registrandome");
+                    Navigator.of(context).popAndPushNamed('/registroview');
+                  },
                   child: const Text('Quiero registrarme.'),
                 ),
 

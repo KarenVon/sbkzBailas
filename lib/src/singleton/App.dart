@@ -2,6 +2,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sbk_bailas/src/Home_Views/Conocenos_View.dart';
+import 'package:sbk_bailas/src/Home_Views/Register_View.dart';
 import 'package:sbk_bailas/src/Home_Views/sbkApp.dart';
 import '../Home_Views/Eventos_View.dart';
 import '../Home_Views/Login_View.dart';
@@ -19,9 +21,12 @@ class App extends StatelessWidget{
       initialRoute: '/sbkapp',
       routes: {
         '/sbkapp':(context) => sbkApp(),
+        '/conocenosview':(context) => Conocenos_View(),
         '/loginview':(context) => Login_View(),
+        '/registroview':(context) => const Register_View(),
         '/eventosview':(context) => Eventos_View(),
         '/orgaview':(context) => Orga_View(),
+
         //'/onboardingview':(context) => OnBoarding_
 
       },
