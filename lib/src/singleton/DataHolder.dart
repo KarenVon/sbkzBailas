@@ -21,6 +21,7 @@ class DataHolder {
 
   DataHolder._internal(){
     sMensaje= "Tu app de eventos de baile";
+    platformAdmin=PlatformAdmin();
   }
 
   factory DataHolder(){
