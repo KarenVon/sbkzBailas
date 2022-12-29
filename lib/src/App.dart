@@ -3,11 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sbk_bailas/src/Home_Views/Conocenos_View.dart';
+import 'package:sbk_bailas/src/Home_Views/Eventos_Seleccionado.dart';
 import 'package:sbk_bailas/src/Home_Views/Register_View.dart';
 import 'package:sbk_bailas/src/Home_Views/sbkApp.dart';
-import '../Home_Views/Eventos_View.dart';
-import '../Home_Views/Login_View.dart';
-import '../Home_Views/Orga_View.dart';
+import 'Home_Views/Eventos_View.dart';
+import 'Home_Views/Login_View.dart';
+import 'Home_Views/Orga_View.dart';
 
 class App extends StatelessWidget{
 
@@ -26,6 +27,8 @@ class App extends StatelessWidget{
         '/registroview':(context) => const Register_View(),
         '/eventosview':(context) => Eventos_View(),
         '/orgaview':(context) => Orga_View(),
+        '/eventoseleccionado':(context) => Evento_Seleccionado(),
+
 
         //'/onboardingview':(context) => OnBoarding_
 

@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.0.0
   firebase_auth: ^4.0.1
+  cloud_firestore: ^4.0.4
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,7 @@ dev_dependencies:
   firebase_auth: ^4.1.2
   cloud_firestore: ^4.0.4
   fluttertoast: ^8.0.9
+
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
