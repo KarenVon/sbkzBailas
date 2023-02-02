@@ -28,18 +28,11 @@ class _organizador extends State<Orga_View>{
   }
 
 
-  void acceptPressed(String nombre, String descripcion, String fecha, String precio,
+  void acceptPressed(String name, String descripcion, String date, String precio,
       BuildContext context) async {
 
-    //para crearlo usando el objeto evento que hemos creado
-    EventsInfo evento = EventsInfo(name: nombre, description: descripcion, date: fecha, price: precio);
-    //para crear un nuevo evento en firebase, cuidado que se sobrescriben
-    /*final datosPerfil = <String, dynamic>{
-      "name": nombre,
-      "desciption": descripcion,
-      "date": fecha,
-      "price": precio
-    };*/
+    //para crear un nuevo evento en firebase usando el objeto evento que hemos creado
+    EventsInfo evento = EventsInfo(name: name, description: descripcion, date: date, price: precio);
 
     await db.collection("eventos").doc(FirebaseAuth.instance.currentUser?.uid)
         .set(evento.toFirestore()).onError((e, _) =>
@@ -82,7 +75,7 @@ class _organizador extends State<Orga_View>{
       ),
       backgroundColor: Colors.cyan.shade500,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 30, bottom:20,left: 10 ,right: 10),
+        padding: const EdgeInsets.only(top: 30, bottom:50,left: 12 ,right: 12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -108,17 +101,6 @@ class _organizador extends State<Orga_View>{
 
                 ),
 
-                ElevatedButton(
-                  onPressed: () {
-
-                  },
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          Colors.black12),
-                      textStyle: MaterialStateProperty.all(
-                          const TextStyle(fontSize: 15))),
-                  child: const Text('Cancelar'),
-                )
               ],
             ),
 

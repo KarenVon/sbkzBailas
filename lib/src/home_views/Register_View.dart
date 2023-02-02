@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Custom_views/KVinputText.dart';
+import '../Home_Views/Orga_View.dart';
 
 class Register_View extends StatelessWidget {
 
@@ -16,7 +17,7 @@ class Register_View extends StatelessWidget {
        email: emailAddress,
        password: password,
      );
-     Navigator.of(context).popAndPushNamed('/orgaview');
+     Navigator.push(context, MaterialPageRoute(builder: (_) => const Orga_View()));
    } on FirebaseAuthException catch (e) {
      if (e.code == 'weak-password') {
        print('The password provided is too weak.');
@@ -50,7 +51,6 @@ class Register_View extends StatelessWidget {
       blIsPasswordInput: true,);
 
     return Scaffold(
-      backgroundColor: Colors.black12,
       body: ListView(
           children: [
             Container(
@@ -62,11 +62,11 @@ class Register_View extends StatelessWidget {
             Container(
               alignment: Alignment.bottomCenter,
               padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-              margin: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+              margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
               decoration: BoxDecoration(
                 color: Colors.cyan,
                 border: Border.all(color: Colors.cyan,
-                    width: 4),
+                    width: 8),
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Column(
@@ -76,43 +76,30 @@ class Register_View extends StatelessWidget {
                   inputUser,
                   inputPass,
                   inputPassBis,
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 12,
-                          color: Colors.white,fontWeight:FontWeight.bold ),
-                    ),
-                    onPressed: () {},
-                    child: const Text('Quiero registrarme.'),
-                  ),
+                ],
+              ),
+            ),
 
                   // const SizedBox(height: 10),
                   Container(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        OutlinedButton(
+                        ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Colors.cyan),
+                              textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15,color: Colors.white))),
                           onPressed: (){
                             print("----->>>>>>>> REGISTRO ACEPTAR");
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => const Orga_View()));
                           },
                           child: Text ("Aceptar"),
-                        ),
-                        OutlinedButton(
-                          onPressed: (){
-                            print("----->>>>>>>> REGISTRO CANCELAR");
-                            Navigator.of(context).popAndPushNamed('/loginview');
-
-                          },
-                          child: Text ("Cancelar"),
                         ),
                       ],
                     ),
                   ),
-
                 ],
               ),
-            ),
-          ],
-      ),
     );
   }
 }

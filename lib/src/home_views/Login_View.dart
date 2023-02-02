@@ -63,20 +63,9 @@ class Login_View extends StatelessWidget {
 
 
     return Scaffold(
-      backgroundColor: Colors.black12,
+      //backgroundColor: Colors.black12,
         body: ListView(
           children: [
-            /*Container(
-                padding: EdgeInsets.all(5),
-                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                alignment: Alignment.center,
-                child: const Text('¡Bailemos la vida!',
-                  style: TextStyle(
-                    fontFamily: 'rcBold',
-                    fontSize: 30,
-                  ),
-                ),
-            ),*/
             Container(
               //padding: const EdgeInsets.all(5),
               //margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
@@ -101,10 +90,9 @@ class Login_View extends StatelessWidget {
                 inputPass,
                 TextButton(
                   style: TextButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 12,
+                    textStyle: const TextStyle(fontSize: 14,
                         color: Colors.white,fontWeight:FontWeight.bold ),
                   ),
-            //    onPressed: () => irRegistro(context),
                   onPressed: () {
                     print("Registrandome");
                     //Navigator.of(context).pushNamed('/registroview');
@@ -112,28 +100,32 @@ class Login_View extends StatelessWidget {
                   },
                   child: const Text('Quiero registrarme.'),
                 ),
+             ],
+              ),
+            ),
 
-               // const SizedBox(height: 10),
-                Column(
+               Container(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    OutlinedButton(
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.cyan),
+                          textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15,color: Colors.white))),
                       onPressed: (){
                         //print("----->>>>>>>> ME HE LOGEADO "+inputUser.getText()+" "+inputPass.getText());
                         //loginPressed(inputUser.getText(),inputPass.getText(),context);
                         Navigator.push(context, MaterialPageRoute(builder: (_) => const Orga_View()));
                         //Navigator.pushNamed(context,'/orgaview');
                       },
-                      child: Text ("Login"),
+                      child: Text ("LOGIN"),
                       //  style: TextStyle(color: Colors.cyan),
                     ),
-        ],
-      ),
+                  ],
+                 ),
+               ),
 
-                ],
-              ),
-            )
-    ]
+   ],
         ),
     );
   }
