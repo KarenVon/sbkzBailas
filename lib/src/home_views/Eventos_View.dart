@@ -47,7 +47,8 @@ class _eventos extends State<Eventos_View> {
     //print("DEBUG: " + index.toString());
     //print("DEBUG: " + eventosBD[index].name!);
     DataHolder().selectedEvent = eventosBD[index];
-    Navigator.of(context).pushNamed("/evento");
+
+    print(DataHolder().selectedEvent);
   }
 
   @override
@@ -62,9 +63,12 @@ class _eventos extends State<Eventos_View> {
             ),
             itemCount: eventosBD.length,
             itemBuilder: (BuildContext context, int index) {
-              return RoomCard(sImgURL: eventosBD[index].image!,
+
+              return GestureDetector(
+                child: RoomCard(sImgURL: eventosBD[index].image!,
                 sName: eventosBD[index].name!,onShortClick: listItemShortClicked,
-                index: index,);
+                index: index,),
+              );
             }
         ),
       ),
