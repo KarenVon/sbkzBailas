@@ -8,16 +8,16 @@ class RoomCard extends StatelessWidget{
   final Function(int index) onShortClick;
   final int index;
 
-  const RoomCard({Key? key, required this.sImgURL, required this.sName,
+  RoomCard({Key? key, required this.sImgURL, required this.sName,
     required this.onShortClick, required this.index}) : super(key:key);
+
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         onShortClick(index);
-       // Navigator.push(context, MaterialPageRoute(builder: (_) => Evento_Seleccionado(nextEventsInfo: nextEventsInfo)));
-        //Navigator.of(context).pushNamed("/evento");
+
       },
       child: Card(
         color: Colors.cyan,

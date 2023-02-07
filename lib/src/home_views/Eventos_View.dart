@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sbk_bailas/src/singleton/DataHolder.dart';
+import 'package:sbk_bailas/src/home_views/Selected_Event.dart';
 import '../Grid_views/RoomCard.dart';
 import '../fb_objects/EventsInfo.dart';
 
@@ -50,10 +50,11 @@ class _eventos extends State<Eventos_View> {
     //DataHolder().selectedEvent = eventosBD[index];
    // print(DataHolder().selectedEvent);
 
-    DataHolder().selectedEvent = nexteventsList[index];
-    Navigator.of(context).pushNamed("/evento");
-   // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)
-  //  => Evento_Seleccionado(nextEventsInfo: nextevenstList[index],)));
+    //DataHolder().selectedEvent = nexteventsList[index];
+    //Navigator.of(context).pushNamed("/evento");
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
+    => Selected_Event(selectedEventInfo: nexteventsList[index],)));
   }
 
   @override
@@ -64,11 +65,10 @@ class _eventos extends State<Eventos_View> {
         child:
         GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
+              crossAxisCount: 2,
             ),
             itemCount: nexteventsList.length,
             itemBuilder: (BuildContext context, int index) {
-
               return GestureDetector(
                 child: RoomCard(sImgURL: nexteventsList[index].image!,
                 sName: nexteventsList[index].name!,onShortClick: listItemShortClicked,
