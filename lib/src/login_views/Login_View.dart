@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sbk_bailas/src/Home_Views/Orga_View.dart';
-import 'package:sbk_bailas/src/Home_Views/Register_View.dart';
+import 'package:sbk_bailas/src/login_views/Register_View.dart';
 
 import '../Custom_views/KVinputText.dart';
 
@@ -14,9 +14,9 @@ class Login_View extends StatelessWidget {
 
   Login_View({Key? key}) : super (key:key);
 
-  KVInputText input1 = KVInputText(sTitulo: "Usuario",);
+  /*KVInputText input1 = KVInputText(sTitulo: "Usuario",);
   KVInputText input2 = KVInputText(
-    sTitulo: "Password", blIsPasswordInput: true,);
+    sTitulo: "Password", blIsPasswordInput: true,);*/
 
   //función para logearse con el usuario creado en consola firebase
   void loginPressed(String emailAddress, String password, BuildContext context) async{
@@ -43,7 +43,8 @@ class Login_View extends StatelessWidget {
   }
 
   void irRegistro(context) {
-    Navigator.pushNamed(context, '/registroview');
+    //Navigator.pushNamed(context, '/registroview');
+    Navigator.push(context, MaterialPageRoute(builder: (_) => Register_View()));
   }
 
   @override
@@ -96,7 +97,7 @@ class Login_View extends StatelessWidget {
                   onPressed: () {
                     print("Registrandome");
                     //Navigator.of(context).pushNamed('/registroview');
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const Register_View()));
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => Register_View()));
                   },
                   child: const Text('Quiero registrarme.'),
                 ),
@@ -116,7 +117,6 @@ class Login_View extends StatelessWidget {
                         //print("----->>>>>>>> ME HE LOGEADO "+inputUser.getText()+" "+inputPass.getText());
                         //loginPressed(inputUser.getText(),inputPass.getText(),context);
                         Navigator.push(context, MaterialPageRoute(builder: (_) => const Orga_View()));
-                        //Navigator.pushNamed(context,'/orgaview');
                       },
                       child: Text ("LOGIN"),
                       //  style: TextStyle(color: Colors.cyan),

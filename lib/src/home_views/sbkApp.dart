@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sbk_bailas/src/Home_Views/Conocenos_View.dart';
 import 'package:sbk_bailas/src/Home_Views/Eventos_View.dart';
-import 'package:sbk_bailas/src/Home_Views/Login_View.dart';
+import 'package:sbk_bailas/src/login_views/Login_View.dart';
+
 
 class sbkApp extends StatefulWidget {
   @override

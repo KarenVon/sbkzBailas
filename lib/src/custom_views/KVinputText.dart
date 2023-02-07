@@ -32,6 +32,7 @@ class KVInputText extends StatelessWidget{
     return TextFormField(
       //controller: para extraer los datos que el usuario haya ingresado
       controller: _controller,
+
       cursorColor: Colors.cyan,
       //initialValue: this.sValorInicial, hay que quitarlo al meter el controller
       maxLength: iLongitudPalabra,

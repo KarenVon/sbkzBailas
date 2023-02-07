@@ -16,7 +16,8 @@ class RoomCard extends StatelessWidget{
     return InkWell(
       onTap: () {
         onShortClick(index);
-        Navigator.of(context).pushNamed("/evento");
+       // Navigator.push(context, MaterialPageRoute(builder: (_) => Evento_Seleccionado(nextEventsInfo: nextEventsInfo)));
+        //Navigator.of(context).pushNamed("/evento");
       },
       child: Card(
         color: Colors.cyan,
