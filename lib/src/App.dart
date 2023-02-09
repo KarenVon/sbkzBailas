@@ -23,7 +23,12 @@ class App extends StatelessWidget{
     // closer together (more dense) than on mobile platforms.
     VisualDensity.adaptivePlatformDensity;
 
-    MaterialApp materialAppMobile=const MaterialApp();
+    MaterialApp materialAppMobile= MaterialApp(
+      /*title: 'Custom Fonts',
+      // Establecer Raleway como la fuente predeterminada de la aplicación
+      theme: ThemeData(fontFamily: 'Raleway'),
+      home: sbkApp(),*/
+    );
 
     if (DataHolder().platformAdmin.isAndroidPlatform() ||
         DataHolder().platformAdmin.isIOSPlatform()) {

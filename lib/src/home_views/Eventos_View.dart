@@ -60,7 +60,7 @@ class _eventos extends State<Eventos_View> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: Colors.white,
       body: Center(
         child:
         GridView.builder(

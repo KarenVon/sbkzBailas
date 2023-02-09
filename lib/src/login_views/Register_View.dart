@@ -8,6 +8,29 @@ class Register_View extends StatelessWidget {
   Register_View({Key? key}) : super(key: key);
 
   var txt = TextEditingController();
+  
+  KVInputText inputUser = KVInputText(
+    iLongitudPalabra: 50,
+    sHelperText: 'introduzca usuario',
+    sTitulo: 'USUARIO',
+    icIzq: Icon(Icons.account_circle_outlined),
+  );
+
+  KVInputText inputPass = KVInputText(
+    iLongitudPalabra: 20,
+    sHelperText: 'introduzca una contraseña',
+    sTitulo: 'CONTRASEÑA',
+    icIzq: Icon(Icons.password),
+    blIsPasswordInput: true,
+  );
+
+  KVInputText inputPassBis = KVInputText(
+    iLongitudPalabra: 20,
+    sHelperText: 'repita la contraseña',
+    sTitulo: 'REPITA CONTRASEÑA',
+    icIzq: Icon(Icons.password),
+    blIsPasswordInput: true,
+  );
 
   Future<void> registerPressed(
       String emailAddress, String password, BuildContext context) async {
@@ -34,87 +57,11 @@ class Register_View extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //subo aqui arriba los inputText para poder usarlos en el loginpressed
-    KVInputText inputUser = KVInputText(
-      iLongitudPalabra: 50,
-      sHelperText: 'introduzca usuario',
-      sTitulo: 'USUARIO',
-      icIzq: Icon(Icons.account_circle_outlined),
-    );
 
-    KVInputText inputPass = KVInputText(
-      iLongitudPalabra: 20,
-      sHelperText: 'introduzca una contraseña',
-      sTitulo: 'CONTRASEÑA',
-      icIzq: Icon(Icons.password),
-      blIsPasswordInput: true,
-    );
 
-    KVInputText inputPassBis = KVInputText(
-      iLongitudPalabra: 20,
-      sHelperText: 'repita la contraseña',
-      sTitulo: 'REPITA CONTRASEÑA',
-      icIzq: Icon(Icons.password),
-      blIsPasswordInput: true,
-    );
+
 
     return Scaffold(
-      /* appBar: AppBar(
-        backgroundColor: CupertinoColors.white,
-        title: Text('REGISTRO NUEVO ORGANIZADOR'),
-    foregroundColor: Colors.cyan,
-    ),
-    backgroundColor: Colors.cyan.shade300,
-    //para quetodo se pueda encuadrar correctamente en la pantalla cuando aparezca el teclado
-    body: SingleChildScrollView(
-    padding: const EdgeInsets.only(top: 100, bottom:20,left: 10 ,right: 10),
-
-    child: Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-
-        children: [
-          inputUser,
-          inputPass,
-          inputPassBis,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  // Respond to button press
-                  if(inputPass.getText() == inputPassBis.getText()){
-                    registerPressed(inputUser.getText(), inputPass.getText(),context);
-                  }
-                  else{
-                    txt.text= "ERROR : las constraseñas no coinciden";
-                  }
-                },
-                child: Text('Aceptar'),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black12),
-                    textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
-
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  // Respond to button press
-                  //print("--------- registrado");
-                  Navigator.of(context).popAndPushNamed('/loginview');
-                },
-                child: Text('Cancelar'),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black12),
-                    textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
-              )
-            ],
-          ),
-          //txtMensajes,
-        ],
-      ),
-    ),
-    ),
-    );*/
       body: ListView(
         children: [
           Container(
