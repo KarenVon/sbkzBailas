@@ -74,37 +74,85 @@ class _evento extends State<Selected_Event> {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(
-                        top: 25, bottom: 20, left: 10, right: 10),
+                        top: 15, bottom: 2, left: 10, right: 10),
+                    child: const Text ('DESCRIPCIÓN',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
+                        decoration: TextDecoration.underline,
+                        shadows: [Shadow(color: Colors.cyan, blurRadius: 2)]
+                      ),),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        top: 0, bottom: 5, left: 10, right: 10),
                     margin: EdgeInsets.fromLTRB(7, 7, 7, 7),
                     alignment: Alignment.center,
                     child: Text(
                         style: const TextStyle(
-                          fontFamily: 'rcBold',
-                          fontSize: 18,
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        //decoration: TextDecoration.underline,
+                        //shadows: [Shadow(color: Colors.white, blurRadius: 10)]
                         ),
                         "${widget.selectedEventInfo.description}"),
                   ),
                   Container(
                     padding: const EdgeInsets.only(
-                        top: 15, bottom: 20, left: 10, right: 10),
+                        top: 5, bottom: 2, left: 10, right: 10),
+                    child: const Text ('FECHA:',
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
+                          decoration: TextDecoration.underline,
+                          shadows: [Shadow(color: Colors.cyan, blurRadius: 2)]
+                      ),),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        top: 0, bottom: 5, left: 10, right: 10),
                     margin: EdgeInsets.fromLTRB(7, 7, 7, 7),
                     alignment: Alignment.center,
                     child: Text(
                         style: const TextStyle(
-                          fontFamily: 'rcBold',
-                          fontSize: 18,
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            //decoration: TextDecoration.underline,
+                           // shadows: [Shadow(color: Colors.black26, blurRadius: 1)]
                         ),
                         "${widget.selectedEventInfo.date}"),
                   ),
                   Container(
                     padding: const EdgeInsets.only(
-                        top: 15, bottom: 200, left: 10, right: 10),
+                        top: 5, bottom: 2, left: 10, right: 10),
+                    child: const Text ('ENTRADAS:',
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
+                          decoration: TextDecoration.underline,
+                          shadows: [Shadow(color: Colors.cyan, blurRadius: 2)]
+                      ),),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        top: 0, bottom: 5, left: 10, right: 10),
                     margin: EdgeInsets.fromLTRB(7, 7, 7, 7),
                     alignment: Alignment.center,
                     child: Text(
                         style: const TextStyle(
-                          fontFamily: 'rcBold',
-                          fontSize: 18,
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            //decoration: TextDecoration.underline,
+                            //shadows: [Shadow(color: Colors.cyan, blurRadius: 2)]
                         ),
                         "${widget.selectedEventInfo.price}"),
                   ),

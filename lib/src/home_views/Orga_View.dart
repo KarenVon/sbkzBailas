@@ -64,6 +64,11 @@ class _organizador extends State<Orga_View>{
       sHelperText: "Escriba una breve descripción del evento",
       sTitulo: "Descripción",
       icIzq: Icon(Icons.description),);
+    KVInputText inputImagen = KVInputText(
+      iLongitudPalabra: 60,
+      sHelperText: "Inserte la imagen de su evento",
+      sTitulo: "Imagen",
+      icIzq: Icon(Icons.image),);
 
 
     return Scaffold(

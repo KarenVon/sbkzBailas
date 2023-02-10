@@ -64,8 +64,9 @@ class _eventos extends State<Eventos_View> {
       body: Center(
         child:
         GridView.builder(
+            scrollDirection: Axis.horizontal,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+              crossAxisCount: 3,
             ),
             itemCount: nexteventsList.length,
             itemBuilder: (BuildContext context, int index) {
