@@ -11,6 +11,7 @@ class KVInputText extends StatelessWidget{
   final String sTitulo;
   final Icon icIzq;
   final bool blIsPasswordInput;
+  late TextFormField formField;
 
   KVInputText ({Key? key,
     this.sValorInicial="",
@@ -19,19 +20,18 @@ class KVInputText extends StatelessWidget{
     this.sTitulo="", this.icIzq= const Icon(Icons.account_circle_outlined),
     this.blIsPasswordInput=false}) : super (key:key);
 
-  final TextEditingController _controller=TextEditingController();
 
-  String getText(){
-    return _controller.text;
+
+  String? getText(){
+    return this.formField.controller?.text.toString();
   }
 
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return TextFormField(
+    formField= TextFormField(
       //controller: para extraer los datos que el usuario haya ingresado
-      controller: _controller,
 
       cursorColor: Colors.cyan,
       //initialValue: this.sValorInicial, hay que quitarlo al meter el controller
@@ -52,6 +52,7 @@ class KVInputText extends StatelessWidget{
       ),
     );
 
+    return formField;
   }
 
 }

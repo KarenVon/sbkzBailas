@@ -48,27 +48,27 @@ class _organizador extends State<Orga_View>{
       iLongitudPalabra: 30,
       sHelperText: "Escriba el nombre del evento",
       sTitulo: "Evento",
-      icIzq: Icon(Icons.near_me_rounded),);
+      icIzq: Icon(Icons.near_me_rounded));
     KVInputText inputFecha = KVInputText(
       iLongitudPalabra: 12,
       sHelperText: "Escriba la fecha en la que tendrá lugar",
       sTitulo: "Fecha",
-      icIzq: Icon(Icons.calendar_month_rounded),);
+      icIzq: Icon(Icons.calendar_month_rounded));
     KVInputText inputPrecio = KVInputText(
       iLongitudPalabra: 5,
       sHelperText: "Escriba el precio del fullpass",
       sTitulo: "€",
-      icIzq: Icon(Icons.monetization_on),);
+      icIzq: Icon(Icons.monetization_on));
     KVInputText inputDescripcion = KVInputText(
       iLongitudPalabra: 60,
       sHelperText: "Escriba una breve descripción del evento",
       sTitulo: "Descripción",
-      icIzq: Icon(Icons.description),);
+      icIzq: Icon(Icons.description));
     KVInputText inputImagen = KVInputText(
       iLongitudPalabra: 60,
       sHelperText: "Inserte la imagen de su evento",
       sTitulo: "Imagen",
-      icIzq: Icon(Icons.image),);
+      icIzq: Icon(Icons.image));
 
 
     return Scaffold(
@@ -93,8 +93,8 @@ class _organizador extends State<Orga_View>{
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    acceptPressed(inputNombre.getText(), inputFecha.getText(),
-                        inputPrecio.getText(), inputDescripcion.getText(),
+                    acceptPressed(inputNombre.getText()!, inputFecha.getText()!,
+                        inputPrecio.getText()!, inputDescripcion.getText()!,
                         context);
                   },
                   style: ButtonStyle(

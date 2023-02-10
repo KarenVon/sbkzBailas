@@ -43,6 +43,7 @@ class Login_View extends StatelessWidget {
   }
 
   void irRegistro(context) {
+    print("------>>>>>>>>>>>>>>>>    ENTRE EN IR A REGISTRO");
     //Navigator.pushNamed(context, '/registroview');
     Navigator.push(context, MaterialPageRoute(builder: (_) => Register_View()));
   }
@@ -54,13 +55,13 @@ class Login_View extends StatelessWidget {
     KVInputText inputUser= KVInputText (iLongitudPalabra: 50,
       sHelperText: 'introduzca su usuario',
       sTitulo: 'USUARIO',
-      icIzq: Icon(Icons.account_circle_outlined),);
+      icIzq: Icon(Icons.account_circle_outlined));
 
     KVInputText inputPass= KVInputText(iLongitudPalabra: 20,
     sHelperText: 'introduzca su contraseña',
     sTitulo: 'PASSWORD',
     icIzq: Icon(Icons.password),
-    blIsPasswordInput: true,);
+    blIsPasswordInput: true);
 
 
     return Scaffold(
