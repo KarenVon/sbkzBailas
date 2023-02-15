@@ -8,7 +8,7 @@ import 'package:sbk_bailas/src/singleton/DataHolder.dart';
 
 import 'Home_Views/Conocenos_View.dart';
 import 'Home_Views/Eventos_View.dart';
-import 'Home_Views/Orga_View.dart';
+import 'Home_Views/AddEvent_View.dart';
 import 'Home_Views/sbkApp.dart';
 import 'login_views/SVLogoWait.dart';
 

@@ -4,7 +4,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sbk_bailas/src/Home_Views/Orga_View.dart';
+import 'package:sbk_bailas/src/Home_Views/AddEvent_View.dart';
 import 'package:sbk_bailas/src/login_views/Register_View.dart';
 
 import '../Custom_views/KVinputText.dart';

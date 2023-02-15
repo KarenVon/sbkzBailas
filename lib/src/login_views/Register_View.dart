@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Custom_views/KVinputText.dart';
-import '../Home_Views/Orga_View.dart';
+import '../Home_Views/AddEvent_View.dart';
 
 class Register_View extends StatelessWidget {
   Register_View({Key? key}) : super(key: key);

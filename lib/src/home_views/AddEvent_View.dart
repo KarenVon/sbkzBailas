@@ -1,9 +1,13 @@
 
 
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../Custom_views/KVinputText.dart';
 import '../fb_objects/EventsInfo.dart';
@@ -11,6 +15,7 @@ import '../fb_objects/EventsInfo.dart';
 class Orga_View extends StatefulWidget {
 
   const Orga_View({Key? key}) : super (key:key);
+
 
   @override
   State<StatefulWidget> createState() {
@@ -41,6 +46,8 @@ class _organizador extends State<Orga_View>{
     //Navigator.of(context).popAndPushNamed("/homeview");
   }
 
+  String imageUrl = '';
+
   @override
   Widget build(BuildContext context) {
 
@@ -66,8 +73,8 @@ class _organizador extends State<Orga_View>{
       icIzq: Icon(Icons.description));
     KVInputText inputImagen = KVInputText(
       iLongitudPalabra: 60,
-      sHelperText: "Inserte la imagen de su evento",
-      sTitulo: "Imagen",
+      //HelperText: "Inserte la imagen de su evento",
+      sTitulo: "Inserte la imagen de su evento",
       icIzq: Icon(Icons.image));
 
 
@@ -88,10 +95,51 @@ class _organizador extends State<Orga_View>{
             inputFecha,
             inputPrecio,
             inputDescripcion,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
+            //inputImagen,
+            FloatingActionButton(
+                onPressed: () async {
+                  //Navigator.of(context).popAndPushNamed("/formularioview");
+                  /*Step1 : PickImage
+                  Install image_picker and import the corresponding library*/
+                  ImagePicker imagePicker = ImagePicker();
+                  XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+                  print('${file?.path}');
+
+                  if(file==null) return;
+                  //import dart:core
+                  String uniqueFileName= DateTime.now().millisecondsSinceEpoch.toString();
+
+                  /*Step2 : Upload to Firebase storage
+                  Install firebase_storage and import the library */
+
+                  //Get a reference to storage root
+                  Reference referenceRoot = FirebaseStorage.instance.ref();
+                  Reference referenceDirImages = referenceRoot.child('images');
+
+                  //Create a reference for the image to be stored
+                  Reference referenceImageTopUpload = referenceDirImages.child(uniqueFileName);
+
+                  //Handle errors/success
+                  try{
+                    //Store the file
+                    //await referenceImageTopUpload.putFile(File(file!.path));
+                    //Success: get the download URL
+                    imageUrl = await referenceImageTopUpload.getDownloadURL();
+
+                  }catch (error){
+
+                  }
+
+
+                },
+                backgroundColor: CupertinoColors.white,
+                child: const Icon(Icons.camera_alt, color: Colors.cyan,)
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 25, bottom:20,left: 10 ,right: 10),
+              margin: EdgeInsets.fromLTRB(7, 7, 7, 7),
+              alignment: Alignment.center,
+                child: ElevatedButton(
                   onPressed: () {
                     acceptPressed(inputNombre.getText()!, inputFecha.getText()!,
                         inputPrecio.getText()!, inputDescripcion.getText()!,
@@ -103,15 +151,13 @@ class _organizador extends State<Orga_View>{
                       textStyle: MaterialStateProperty.all(
                           const TextStyle(fontSize: 15))),
                   child: const Text('Aceptar'),
-
                 ),
+            ),
 
               ],
             ),
-
-          ],
-        ),
       ),
-    );
+        );
+
   }
 }
