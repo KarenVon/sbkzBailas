@@ -3,8 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sbk_bailas/src/singleton/DataHolder.dart';
-
+import 'package:sbk_bailas/src/home_views/Selected_Event.dart';
 import '../Grid_views/RoomCard.dart';
 import '../fb_objects/EventsInfo.dart';
 
@@ -21,7 +20,7 @@ class _eventos extends State<Eventos_View> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   String sNombre = "---";
 
-  List<EventsInfo> eventosBD = [];
+  List<EventsInfo> nexteventsList= [];
 
   @override
   void initState() {
@@ -29,7 +28,9 @@ class _eventos extends State<Eventos_View> {
     getEventosList();
   }
 
+  //llamada a firestore para descargar la lista de eventos para ello creo el objeto NextEvents
   void getEventosList() async {
+
     final docRef = db.collection("eventos").
     withConverter(fromFirestore: EventsInfo.fromFirestore,
         toFirestore: (EventsInfo eventsinfo, _) => eventsinfo.toFirestore());
@@ -38,35 +39,40 @@ class _eventos extends State<Eventos_View> {
 
     setState(() {
       for (int i = 0; i < docsSnap.docs.length; i++) {
-        eventosBD.add(docsSnap.docs[i].data());
+        nexteventsList.add(docsSnap.docs[i].data());
       }
     });
   }
 
   void listItemShortClicked(int index) {
-    //print("DEBUG: " + index.toString());
-    //print("DEBUG: " + eventosBD[index].name!);
-    DataHolder().selectedEvent = eventosBD[index];
+    print("DEBUG: " + index.toString());
+    print("DEBUG: " + nexteventsList[index].name!);
+    //DataHolder().selectedEvent = eventosBD[index];
+   // print(DataHolder().selectedEvent);
 
-    print(DataHolder().selectedEvent);
+    //DataHolder().selectedEvent = nexteventsList[index];
+    //Navigator.of(context).pushNamed("/evento");
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
+    => Selected_Event(selectedEventInfo: nexteventsList[index],)));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: Colors.white,
       body: Center(
         child:
         GridView.builder(
+            scrollDirection: Axis.horizontal,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
             ),
-            itemCount: eventosBD.length,
+            itemCount: nexteventsList.length,
             itemBuilder: (BuildContext context, int index) {
-
               return GestureDetector(
-                child: RoomCard(sImgURL: eventosBD[index].image!,
-                sName: eventosBD[index].name!,onShortClick: listItemShortClicked,
+                child: RoomCard(sImgURL: nexteventsList[index].image!,
+                sName: nexteventsList[index].name!,onShortClick: listItemShortClicked,
                 index: index,),
               );
             }

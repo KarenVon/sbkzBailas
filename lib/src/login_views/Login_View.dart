@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sbk_bailas/src/Home_Views/Orga_View.dart';
-import 'package:sbk_bailas/src/Home_Views/Register_View.dart';
+import 'package:sbk_bailas/src/login_views/Register_View.dart';
 
 import '../Custom_views/KVinputText.dart';
 
@@ -14,9 +14,9 @@ class Login_View extends StatelessWidget {
 
   Login_View({Key? key}) : super (key:key);
 
-  KVInputText input1 = KVInputText(sTitulo: "Usuario",);
+  /*KVInputText input1 = KVInputText(sTitulo: "Usuario",);
   KVInputText input2 = KVInputText(
-    sTitulo: "Password", blIsPasswordInput: true,);
+    sTitulo: "Password", blIsPasswordInput: true,);*/
 
   //función para logearse con el usuario creado en consola firebase
   void loginPressed(String emailAddress, String password, BuildContext context) async{
@@ -43,7 +43,9 @@ class Login_View extends StatelessWidget {
   }
 
   void irRegistro(context) {
-    Navigator.pushNamed(context, '/registroview');
+    print("------>>>>>>>>>>>>>>>>    ENTRE EN IR A REGISTRO");
+    //Navigator.pushNamed(context, '/registroview');
+    Navigator.push(context, MaterialPageRoute(builder: (_) => Register_View()));
   }
 
   @override
@@ -53,30 +55,19 @@ class Login_View extends StatelessWidget {
     KVInputText inputUser= KVInputText (iLongitudPalabra: 50,
       sHelperText: 'introduzca su usuario',
       sTitulo: 'USUARIO',
-      icIzq: Icon(Icons.account_circle_outlined),);
+      icIzq: Icon(Icons.account_circle_outlined));
 
     KVInputText inputPass= KVInputText(iLongitudPalabra: 20,
     sHelperText: 'introduzca su contraseña',
     sTitulo: 'PASSWORD',
     icIzq: Icon(Icons.password),
-    blIsPasswordInput: true,);
+    blIsPasswordInput: true);
 
 
     return Scaffold(
-      backgroundColor: Colors.black12,
+      //backgroundColor: Colors.black12,
         body: ListView(
           children: [
-            /*Container(
-                padding: EdgeInsets.all(5),
-                margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                alignment: Alignment.center,
-                child: const Text('¡Bailemos la vida!',
-                  style: TextStyle(
-                    fontFamily: 'rcBold',
-                    fontSize: 30,
-                  ),
-                ),
-            ),*/
             Container(
               //padding: const EdgeInsets.all(5),
               //margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
@@ -101,39 +92,41 @@ class Login_View extends StatelessWidget {
                 inputPass,
                 TextButton(
                   style: TextButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 12,
+                    textStyle: const TextStyle(fontSize: 14,
                         color: Colors.white,fontWeight:FontWeight.bold ),
                   ),
-            //    onPressed: () => irRegistro(context),
                   onPressed: () {
                     print("Registrandome");
                     //Navigator.of(context).pushNamed('/registroview');
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => const Register_View()));
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => Register_View()));
                   },
                   child: const Text('Quiero registrarme.'),
                 ),
+             ],
+              ),
+            ),
 
-               // const SizedBox(height: 10),
-                Column(
+               Container(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    OutlinedButton(
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.cyan),
+                          textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15,color: Colors.white))),
                       onPressed: (){
                         //print("----->>>>>>>> ME HE LOGEADO "+inputUser.getText()+" "+inputPass.getText());
                         //loginPressed(inputUser.getText(),inputPass.getText(),context);
                         Navigator.push(context, MaterialPageRoute(builder: (_) => const Orga_View()));
-                        //Navigator.pushNamed(context,'/orgaview');
                       },
-                      child: Text ("Login"),
+                      child: Text ("LOGIN"),
                       //  style: TextStyle(color: Colors.cyan),
                     ),
-        ],
-      ),
+                  ],
+                 ),
+               ),
 
-                ],
-              ),
-            )
-    ]
+   ],
         ),
     );
   }

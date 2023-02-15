@@ -1,16 +1,23 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sbk_bailas/src/fb_objects/EventsInfo.dart';
 
+import '../fb_objects/Perfil.dart';
 import '../platform/PlatformAdmin.dart';
 
 class DataHolder {
+
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
 
   static final DataHolder _dataHolder = new DataHolder._internal();
 
   //para utilizarlo en tods las clases y evitar escribir mal el nombre y que tengamos errores
   String sCOLLECTION_EVENTOS_INFO = "eventos";
 
+
+  Perfil perfil = Perfil();
   EventsInfo eventsInfo = EventsInfo();
 
   String sMensaje="";

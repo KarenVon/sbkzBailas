@@ -28,18 +28,11 @@ class _organizador extends State<Orga_View>{
   }
 
 
-  void acceptPressed(String nombre, String descripcion, String fecha, String precio,
+  void acceptPressed(String name, String descripcion, String date, String precio,
       BuildContext context) async {
 
-    //para crearlo usando el objeto evento que hemos creado
-    EventsInfo evento = EventsInfo(name: nombre, description: descripcion, date: fecha, price: precio);
-    //para crear un nuevo evento en firebase, cuidado que se sobrescriben
-    /*final datosPerfil = <String, dynamic>{
-      "name": nombre,
-      "desciption": descripcion,
-      "date": fecha,
-      "price": precio
-    };*/
+    //para crear un nuevo evento en firebase usando el objeto evento que hemos creado
+    EventsInfo evento = EventsInfo(name: name, description: descripcion, date: date, price: precio);
 
     await db.collection("eventos").doc(FirebaseAuth.instance.currentUser?.uid)
         .set(evento.toFirestore()).onError((e, _) =>
@@ -55,22 +48,27 @@ class _organizador extends State<Orga_View>{
       iLongitudPalabra: 30,
       sHelperText: "Escriba el nombre del evento",
       sTitulo: "Evento",
-      icIzq: Icon(Icons.near_me_rounded),);
+      icIzq: Icon(Icons.near_me_rounded));
     KVInputText inputFecha = KVInputText(
       iLongitudPalabra: 12,
       sHelperText: "Escriba la fecha en la que tendrá lugar",
       sTitulo: "Fecha",
-      icIzq: Icon(Icons.calendar_month_rounded),);
+      icIzq: Icon(Icons.calendar_month_rounded));
     KVInputText inputPrecio = KVInputText(
       iLongitudPalabra: 5,
       sHelperText: "Escriba el precio del fullpass",
       sTitulo: "€",
-      icIzq: Icon(Icons.monetization_on),);
+      icIzq: Icon(Icons.monetization_on));
     KVInputText inputDescripcion = KVInputText(
       iLongitudPalabra: 60,
       sHelperText: "Escriba una breve descripción del evento",
       sTitulo: "Descripción",
-      icIzq: Icon(Icons.description),);
+      icIzq: Icon(Icons.description));
+    KVInputText inputImagen = KVInputText(
+      iLongitudPalabra: 60,
+      sHelperText: "Inserte la imagen de su evento",
+      sTitulo: "Imagen",
+      icIzq: Icon(Icons.image));
 
 
     return Scaffold(
@@ -82,7 +80,7 @@ class _organizador extends State<Orga_View>{
       ),
       backgroundColor: Colors.cyan.shade500,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 30, bottom:20,left: 10 ,right: 10),
+        padding: const EdgeInsets.only(top: 30, bottom:50,left: 12 ,right: 12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -95,8 +93,8 @@ class _organizador extends State<Orga_View>{
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    acceptPressed(inputNombre.getText(), inputFecha.getText(),
-                        inputPrecio.getText(), inputDescripcion.getText(),
+                    acceptPressed(inputNombre.getText()!, inputFecha.getText()!,
+                        inputPrecio.getText()!, inputDescripcion.getText()!,
                         context);
                   },
                   style: ButtonStyle(
@@ -108,17 +106,6 @@ class _organizador extends State<Orga_View>{
 
                 ),
 
-                ElevatedButton(
-                  onPressed: () {
-
-                  },
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          Colors.black12),
-                      textStyle: MaterialStateProperty.all(
-                          const TextStyle(fontSize: 15))),
-                  child: const Text('Cancelar'),
-                )
               ],
             ),
 
