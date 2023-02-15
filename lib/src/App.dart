@@ -1,13 +1,15 @@
 
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sbk_bailas/src/Home_Views/Conocenos_View.dart';
-import 'package:sbk_bailas/src/Home_Views/Evento_Seleccionado.dart';
-import 'package:sbk_bailas/src/Home_Views/Register_View.dart';
-import 'package:sbk_bailas/src/Home_Views/sbkApp.dart';
+import 'package:sbk_bailas/src/login_views/Login_View.dart';
+import 'package:sbk_bailas/src/login_views/Register_View.dart';
 import 'package:sbk_bailas/src/singleton/DataHolder.dart';
+
+import 'Home_Views/Conocenos_View.dart';
 import 'Home_Views/Eventos_View.dart';
-import 'Home_Views/Login_View.dart';
 import 'Home_Views/Orga_View.dart';
+import 'Home_Views/sbkApp.dart';
 import 'login_views/SVLogoWait.dart';
 
 class App extends StatelessWidget{
@@ -21,21 +23,26 @@ class App extends StatelessWidget{
     // closer together (more dense) than on mobile platforms.
     VisualDensity.adaptivePlatformDensity;
 
-    MaterialApp materialAppMobile=const MaterialApp();
+    MaterialApp materialAppMobile= MaterialApp(
+      /*title: 'Custom Fonts',
+      // Establecer Raleway como la fuente predeterminada de la aplicación
+      theme: ThemeData(fontFamily: 'Raleway'),
+      home: sbkApp(),*/
+    );
 
     if (DataHolder().platformAdmin.isAndroidPlatform() ||
         DataHolder().platformAdmin.isIOSPlatform()) {
       materialAppMobile = MaterialApp(
       title: 'SBKZ bailas',
       initialRoute: '/splashview',
+
       routes: {
         '/sbkapp':(context) => sbkApp(),
         '/conocenosview':(context) => Conocenos_View(),
         '/loginview':(context) => Login_View(),
-        '/registroview':(context) => const Register_View(),
+        '/registroview':(context) =>  Register_View(),
         '/eventosview':(context) => Eventos_View(),
         '/orgaview':(context) => Orga_View(),
-        '/evento':(context) => Evento_Seleccionado(),
         '/splashview': (context) => const SVLogoWait("assets/logo.png"),
 
       },
@@ -51,10 +58,9 @@ class App extends StatelessWidget{
           '/sbkapp':(context) => sbkApp(),
           '/conocenosview':(context) => Conocenos_View(),
           '/loginview':(context) => Login_View(),
-          '/registroview':(context) => const Register_View(),
+          '/registroview':(context) =>  Register_View(),
           '/eventosview':(context) => Eventos_View(),
           '/orgaview':(context) => Orga_View(),
-          '/evento':(context) => Evento_Seleccionado(),
           '/splashview': (context) => const SVLogoWait("assets/abrazo.png"),
         },
       );

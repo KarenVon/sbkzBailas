@@ -29,6 +29,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  #Picking image from gallery
+  image_picker: ^0.8.6+1
   flutter:
     sdk: flutter
 
@@ -77,6 +79,7 @@ flutter:
   assets:
     - assets/logo.png
     - assets/abrazo.png
+    - assets/logoSolo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -90,7 +93,8 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

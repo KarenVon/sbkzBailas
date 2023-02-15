@@ -4,9 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sbk_bailas/src/Home_Views/Conocenos_View.dart';
 import 'package:sbk_bailas/src/Home_Views/Eventos_View.dart';
-import 'package:sbk_bailas/src/Home_Views/Login_View.dart';
+import 'package:sbk_bailas/src/login_views/Login_View.dart';
+
 
 class sbkApp extends StatefulWidget {
+
+
   @override
   _sbkApp createState() => _sbkApp();
 
@@ -19,7 +22,7 @@ class sbkApp extends StatefulWidget {
       Conocenos_View(),
       Eventos_View(),
       Login_View(),
-      Center(child: Text('Asistente', style: TextStyle(fontSize: 60))),
+      Center(child: Text('Chat', style: TextStyle(fontSize: 60))),
       Center(child: Text('Consultas', style: TextStyle(fontSize: 60))),
     ];
 
@@ -56,8 +59,8 @@ class sbkApp extends StatefulWidget {
                  label: 'Organizador',
                ),
                BottomNavigationBarItem(
-                 icon: Icon(Icons.account_circle_sharp),
-                 label: 'Asistente',
+                 icon: Icon(Icons.abc_rounded),
+                 label: 'Chat',
                ),
                BottomNavigationBarItem(
                  icon: Icon(Icons.ad_units),
