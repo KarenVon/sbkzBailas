@@ -146,47 +146,43 @@ class _organizador extends State<Orga_View> {
                 ),
               ),
             ),
-            Container(
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (imageUrl.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Please upload an image')));
-                    return;
-                  }
-                  if (key.currentState!.validate()) {
-                    String itemNombre = _controllerNombre.text;
-                    String itemFecha = _controllerFecha.text;
-                    String itemPrecio = _controllerPrecio.text;
-                    String itemDescripcion = _controllerDescripcion.text;
+            ElevatedButton(
+              onPressed: () async {
+                if (imageUrl.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please upload an image')));
+                  return;
+                }
+                if (key.currentState!.validate()) {
+                  String itemNombre = _controllerNombre.text;
+                  String itemFecha = _controllerFecha.text;
+                  String itemPrecio = _controllerPrecio.text;
+                  String itemDescripcion = _controllerDescripcion.text;
 
-                    Map<String, String> dataToSend = {
-                      'nombre': itemNombre,
-                      'fecha': itemFecha,
-                      'precio': itemPrecio,
-                      'descripcion': itemDescripcion,
-                      'imagen': imageUrl,
-                    };
+                 Map<String, String> dataToSend = {
+                    'nombre': itemNombre,
+                    'fecha': itemFecha,
+                    'precio': itemPrecio,
+                    'descripcion': itemDescripcion,
+                    'imagen': imageUrl,
+                  };
+                  //Add a new item
+                  _reference.add(dataToSend);
 
-                    //Add a new item
-                    _reference.add(dataToSend);
-
-                    acceptPressed(
-                        inputNombre.getText()!,
-                        inputFecha.getText()!,
-                        inputPrecio.getText()!,
-                        inputDescripcion.getText()!,
-                        inputImagen.getText()!,
-                        context);
-                  }
-                  ;
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black12),
-                    textStyle: MaterialStateProperty.all(
-                        const TextStyle(fontSize: 15))),
-                child: const Text('Agregar Evento'),
-              ),
+                  acceptPressed(
+                      inputNombre.getText()!,
+                      inputFecha.getText()!,
+                      inputPrecio.getText()!,
+                      inputDescripcion.getText()!,
+                      inputImagen.getText()!,
+                      context);
+                }
+              },
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black12),
+                  textStyle: MaterialStateProperty.all(
+                      const TextStyle(fontSize: 15))),
+              child: const Text('Agregar Evento'),
             ),
           ],
         ),

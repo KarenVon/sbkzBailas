@@ -8,6 +8,7 @@ import 'package:sbk_bailas/src/Home_Views/Orga_View.dart';
 import 'package:sbk_bailas/src/login_views/Register_View.dart';
 
 import '../Custom_views/KVinputText.dart';
+import 'TermsOfUse.dart';
 
 
 class Login_View extends StatelessWidget {
@@ -109,7 +110,7 @@ class Login_View extends StatelessWidget {
                Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: <Widget>[
                     ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.cyan),
@@ -119,9 +120,10 @@ class Login_View extends StatelessWidget {
                         //loginPressed(inputUser.getText(),inputPass.getText(),context);
                         Navigator.push(context, MaterialPageRoute(builder: (_) => const Orga_View()));
                       },
-                      child: Text ("LOGIN"),
+                      child: const Text ("LOGIN"),
                       //  style: TextStyle(color: Colors.cyan),
                     ),
+                    TermsOfUse()
                   ],
                  ),
                ),
