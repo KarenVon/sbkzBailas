@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Custom_views/KVinputText.dart';
@@ -19,68 +18,56 @@ class Orga_View extends StatefulWidget {
 }
 
 class _organizador extends State<Orga_View> {
-  TextEditingController _controllerNombre = TextEditingController();
-  TextEditingController _controllerFecha = TextEditingController();
-  TextEditingController _controllerPrecio = TextEditingController();
-  TextEditingController _controllerDescripcion = TextEditingController();
+
+  KVInputText inputNombre = KVInputText(
+      iLongitudPalabra: 50,
+      sHelperText: "Escriba el nombre del evento",
+      sTitulo: "Evento",
+      icIzq: Icon(Icons.near_me_rounded),
+      textEditingController: TextEditingController());
+  KVInputText inputFecha = KVInputText(
+      iLongitudPalabra: 30,
+      sHelperText: "Escriba la fecha en la que tendrá lugar",
+      sTitulo: "Fecha",
+      icIzq: Icon(Icons.calendar_month_rounded),
+      textEditingController: TextEditingController());
+  KVInputText inputPrecio = KVInputText(
+      iLongitudPalabra: 5,
+      sHelperText: "Escriba el precio del fullpass",
+      sTitulo: "€",
+      icIzq: Icon(Icons.monetization_on),
+      textEditingController: TextEditingController());
+  KVInputText inputDescripcion = KVInputText(
+      iLongitudPalabra: 300,
+      sHelperText: "Escriba una breve descripción del evento",
+      sTitulo: "Descripción",
+      icIzq: Icon(Icons.description),
+      textEditingController: TextEditingController());
+  KVInputText inputImagen = KVInputText(
+      iLongitudPalabra: 100,
+      //sHelperText: "Inserte la imagen de su evento",
+      sTitulo: "Imagen",
+      icIzq: Icon(Icons.image),
+      textEditingController: TextEditingController());
+
+  bool _isButtonDisabled=true;
 
   FirebaseFirestore db = FirebaseFirestore.instance;
   @override
   void initState() {
     super.initState();
-    //checkExistingProfile();
   }
 
-  void acceptPressed(String name, String descripcion, String date,
-      String precio, String imagen, BuildContext context) async {
-    //para crear un nuevo evento en firebase usando el objeto evento que hemos creado
-    EventsInfo evento = EventsInfo(
-        name: name,
-        description: descripcion,
-        date: date,
-        price: precio,
-        image: imagen);
+  void acceptPressed(EventsInfo evento, BuildContext context) async {
+    await db.collection("eventos").add(evento.toFirestore());
 
-    await db
-        .collection("eventos")
-        .doc(FirebaseAuth.instance.currentUser?.uid)
-        .set(evento.toFirestore())
-        .onError((e, _) => print("Error writing document: $e"));
-    //Navigator.of(context).popAndPushNamed("/homeview");
   }
 
-  GlobalKey<FormState> key = GlobalKey();
-  CollectionReference _reference =
-      FirebaseFirestore.instance.collection("eventos");
   String imageUrl = '';
 
   @override
   Widget build(BuildContext context) {
-    KVInputText inputNombre = KVInputText(
-        iLongitudPalabra: 50,
-        sHelperText: "Escriba el nombre del evento",
-        sTitulo: "Evento",
-        icIzq: Icon(Icons.near_me_rounded));
-    KVInputText inputFecha = KVInputText(
-        iLongitudPalabra: 30,
-        sHelperText: "Escriba la fecha en la que tendrá lugar",
-        sTitulo: "Fecha",
-        icIzq: Icon(Icons.calendar_month_rounded));
-    KVInputText inputPrecio = KVInputText(
-        iLongitudPalabra: 5,
-        sHelperText: "Escriba el precio del fullpass",
-        sTitulo: "€",
-        icIzq: Icon(Icons.monetization_on));
-    KVInputText inputDescripcion = KVInputText(
-        iLongitudPalabra: 300,
-        sHelperText: "Escriba una breve descripción del evento",
-        sTitulo: "Descripción",
-        icIzq: Icon(Icons.description));
-    KVInputText inputImagen = KVInputText(
-        iLongitudPalabra: 100,
-        //sHelperText: "Inserte la imagen de su evento",
-        sTitulo: "Imagen",
-        icIzq: Icon(Icons.image));
+
 
     return Scaffold(
       appBar: AppBar(
@@ -106,7 +93,6 @@ class _organizador extends State<Orga_View> {
                   /*Step 1: PickImage
                     * Install image_picker : flutter pub add image_picker
                     * import the corresponding library*/
-
                   ImagePicker imagePicker = ImagePicker();
                   XFile? file =
                       await imagePicker.pickImage(source: ImageSource.gallery);
@@ -120,7 +106,6 @@ class _organizador extends State<Orga_View> {
                   /*Step 2: uploas to Firebae storage
                     * Install farebase_storage: flutter pub add firebase_storage
                     * import the corresponding library: import 'package:firebase_storage/firebase_storage.dart';*/
-
                   //Get a reference to storage root
                   Reference referenceRoot = FirebaseStorage.instance.ref();
                   Reference referenceDirImages = referenceRoot.child('images');
@@ -135,6 +120,9 @@ class _organizador extends State<Orga_View> {
                     await referenceImageToUpload.putFile(File(file!.path));
                     //Success: get the download URL
                     imageUrl = await referenceImageToUpload.getDownloadURL();
+                    setState(() {
+                      _isButtonDisabled=false;
+                    });
                   } catch (error) {
                     //Some error ocurred
                   }
@@ -148,33 +136,27 @@ class _organizador extends State<Orga_View> {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (imageUrl.isEmpty) {
+                //print("---------->>>>>>>>> 2222222222"+imageUrl.toString());
+                if (_isButtonDisabled) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Please upload an image')));
-                  return;
+                      const SnackBar(content: Text('Debes insertar una imagen')));
                 }
-                if (key.currentState!.validate()) {
-                  String itemNombre = _controllerNombre.text;
-                  String itemFecha = _controllerFecha.text;
-                  String itemPrecio = _controllerPrecio.text;
-                  String itemDescripcion = _controllerDescripcion.text;
+                else {
+                  String itemNombre = inputNombre.getText()!;
+                  String itemFecha = inputFecha.getText()!;
+                  String itemPrecio = inputPrecio.getText()!;
+                  String itemDescripcion = inputDescripcion.getText()!;
 
-                 Map<String, String> dataToSend = {
-                    'nombre': itemNombre,
-                    'fecha': itemFecha,
-                    'precio': itemPrecio,
-                    'descripcion': itemDescripcion,
-                    'imagen': imageUrl,
-                  };
-                  //Add a new item
-                  _reference.add(dataToSend);
+                  //para crear un nuevo evento en firebase usando el objeto evento que hemos creado
+                  EventsInfo evento = EventsInfo(
+                      name: itemNombre,
+                      description: itemDescripcion,
+                      date: itemFecha,
+                      price: itemPrecio,
+                      image: imageUrl);
 
                   acceptPressed(
-                      inputNombre.getText()!,
-                      inputFecha.getText()!,
-                      inputPrecio.getText()!,
-                      inputDescripcion.getText()!,
-                      inputImagen.getText()!,
+                      evento,
                       context);
                 }
               },
@@ -182,7 +164,8 @@ class _organizador extends State<Orga_View> {
                   backgroundColor: MaterialStateProperty.all(Colors.black12),
                   textStyle: MaterialStateProperty.all(
                       const TextStyle(fontSize: 15))),
-              child: const Text('Agregar Evento'),
+              child: _isButtonDisabled ? null : const Text('Agregar Evento'),
+
             ),
           ],
         ),

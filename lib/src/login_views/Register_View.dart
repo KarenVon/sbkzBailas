@@ -8,29 +8,30 @@ class Register_View extends StatelessWidget {
   Register_View({Key? key}) : super(key: key);
 
   var txt = TextEditingController();
-  TextEditingController controllerUser=TextEditingController(text: "");
-  TextEditingController controllerPass=TextEditingController(text: "");
-  TextEditingController controllerPassBis=TextEditingController(text: "");
-  
+
+  //subo aqui arriba los inputText para poder usarlos en el loginpressed
   KVInputText inputUser =KVInputText(
       iLongitudPalabra: 50,
       sHelperText: 'introduzca usuario',
       sTitulo: 'USUARIO',
-      icIzq: Icon(Icons.account_circle_outlined));
+      icIzq: Icon(Icons.account_circle_outlined),
+      textEditingController: TextEditingController());
 
   KVInputText inputPass = KVInputText(
     iLongitudPalabra: 20,
     sHelperText: 'introduzca una contraseña',
     sTitulo: 'CONTRASEÑA',
     icIzq: Icon(Icons.password),
-    blIsPasswordInput: true);
+    blIsPasswordInput: true,
+      textEditingController: TextEditingController());
 
   KVInputText inputPassBis = KVInputText(
     iLongitudPalabra: 20,
     sHelperText: 'repita la contraseña',
     sTitulo: 'REPITA CONTRASEÑA',
     icIzq: Icon(Icons.password),
-    blIsPasswordInput: true);
+    blIsPasswordInput: true,
+      textEditingController: TextEditingController());
 
   Future<void> registerPressed(
       String emailAddress, String password, BuildContext context) async {
@@ -56,8 +57,6 @@ class Register_View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //subo aqui arriba los inputText para poder usarlos en el loginpressed
-
     return Scaffold(
       body: ListView(
         children: [
@@ -93,7 +92,8 @@ class Register_View extends StatelessWidget {
     iLongitudPalabra: 50,
     sHelperText: 'introduzca usuario',
     sTitulo: 'USUARIO',
-    icIzq: Icon(Icons.account_circle_outlined)),
+    icIzq: Icon(Icons.account_circle_outlined),
+        textEditingController: TextEditingController()),
                 inputPass,
                 inputPassBis,
               ],
@@ -109,9 +109,6 @@ class Register_View extends StatelessWidget {
                       textStyle: MaterialStateProperty.all(
                           TextStyle(fontSize: 15, color: Colors.white))),
                   onPressed: () {
-                    print("DEBUG "+ inputUser.getText()!);
-                    print("DEBUG "+ inputPass.getText()!);
-                    print("DEBUG "+ inputPassBis.getText()!);
                     // Respond to button press
                     if (inputPass.getText() == inputPassBis.getText()) {
                      registerPressed(
