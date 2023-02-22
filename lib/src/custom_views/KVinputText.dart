@@ -10,7 +10,8 @@ class KVInputText extends StatelessWidget{
   final String sHelperText;
   final String sTitulo;
   final Icon icIzq;
-  final bool blIsPasswordInput;
+  final bool blIsPasswordInput;// Key for form
+  final String? Function(String?)? validator;
   late TextFormField formField;
   final TextEditingController textEditingController;
 
@@ -18,24 +19,27 @@ class KVInputText extends StatelessWidget{
     this.sValorInicial="",
     this.iLongitudPalabra=20,
     this.sHelperText="",
-    this.sTitulo="", this.icIzq= const Icon(Icons.account_circle_outlined),
+    this.sTitulo="",
+    this.validator,
+    this.icIzq= const Icon(Icons.account_circle_outlined),
     this.blIsPasswordInput=false, required this.textEditingController}) : super (key:key);
 
 
 
   String? getText(){
-    print("--------------->>>>>>>>>>>>>>>>>>>>>>> "+formField.controller.toString());
+   // print("--------------->>>>>>>>>>>>>>>>>>>>>>> "+formField.controller.toString());
     return formField.controller?.text.toString();
   }
+
+  var _formkey = GlobalKey<FormState>();
 
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     formField= TextFormField(
+      key: _formkey,
       controller: textEditingController,
-      //controller: para extraer los datos que el usuario haya ingresado
-      //controller: TextEditingController(),
+      validator: this.validator,
       cursorColor: Colors.cyan,
       //initialValue: this.sValorInicial, //hay que quitarlo al meter el controller
       maxLength: iLongitudPalabra,

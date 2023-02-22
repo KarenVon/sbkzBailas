@@ -10,6 +10,7 @@ import 'TermsOfUse.dart';
 class Login_View extends StatelessWidget {
   Login_View({Key? key}) : super(key: key);
 
+
   //función para logearse con el usuario creado en consola firebase
   void loginPressed(
       String emailAddress, String password, BuildContext context) async {
@@ -17,7 +18,8 @@ class Login_View extends StatelessWidget {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
       print("ME HE LOGEADO");
-      Navigator.of(context).popAndPushNamed('/orgaview');
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => const Orga_View()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('DEBUG: No user found for that email.');
@@ -34,26 +36,46 @@ class Login_View extends StatelessWidget {
   }
 
   @override
+  final _formkey = GlobalKey<FormState>();
+
   Widget build(BuildContext context) {
     //subo aqui arriba los inputText para poder usarlos en el loginpressed
     KVInputText inputUser = KVInputText(
         iLongitudPalabra: 50,
         sHelperText: 'introduzca su usuario',
         sTitulo: 'USUARIO',
-        icIzq: Icon(Icons.account_circle_outlined),
-        textEditingController: TextEditingController());
+        icIzq: const Icon(Icons.account_circle_outlined),
+        textEditingController: TextEditingController(),
 
+        validator: (String? value) {
+          if (value!.isEmpty ||
+              !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(value)) {
+            return "EMAIL NO VALIDO";
+          } else {
+            return null;
+          }
+        });
     KVInputText inputPass = KVInputText(
         iLongitudPalabra: 20,
         sHelperText: 'introduzca su contraseña',
         sTitulo: 'PASSWORD',
-        icIzq: Icon(Icons.password),
+        icIzq: const Icon(Icons.password),
         blIsPasswordInput: true,
-        textEditingController: TextEditingController());
+        textEditingController: TextEditingController(),
+        validator: (String? value) {
+          print("---------->>>>>>>>>>>>>>>!!!!!!!!!!!!!!!!!!!!! ");
+          if (value!.isEmpty || value.length!<6 ) {
+            return "CONTRASEÑA INCORRECTA";
+          } else {
+            return null;
+          }
+        });
 
     return Scaffold(
       //backgroundColor: Colors.black12,
-      body: ListView(
+      body: Form(
+        key: _formkey,
+        child:ListView(
         children: [
           Container(
             //padding: const EdgeInsets.all(5),
@@ -97,17 +119,21 @@ class Login_View extends StatelessWidget {
           Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+              children: [
                 ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.cyan),
                       textStyle: MaterialStateProperty.all(
-                          TextStyle(fontSize: 15, color: Colors.white))),
+                          const TextStyle(fontSize: 15, color: Colors.white))),
                   onPressed: () {
-                    //print("----->>>>>>>> ME HE LOGEADO "+inputUser.getText()+" "+inputPass.getText());
-                    //loginPressed(inputUser.getText(),inputPass.getText(),context);
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const Orga_View()));
+                      if (_formkey.currentState!.validate()) {
+                        //print("----->>>>>>>> VALIDACION BIEN ");
+                        loginPressed(
+                            inputUser.getText()!, inputPass.getText()!, context);
+                      }
+                      else{
+                        //print("----->>>>>>>> FALLA VALIDACION ");
+                      }
                   },
                   child: const Text("LOGIN"),
                   //  style: TextStyle(color: Colors.cyan),
@@ -118,6 +144,7 @@ class Login_View extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

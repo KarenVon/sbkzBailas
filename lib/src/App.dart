@@ -1,5 +1,5 @@
 
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sbk_bailas/src/login_views/Login_View.dart';
@@ -14,7 +14,10 @@ import 'login_views/SVLogoWait.dart';
 
 class App extends StatelessWidget{
 
-  const App({Key? key}) : super(key:key);
+  App({Key? key}) : super(key:key);
+
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
 
   @override
   Widget build(BuildContext context) {

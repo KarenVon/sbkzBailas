@@ -48,7 +48,7 @@ class Register_View extends StatelessWidget {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        txt.text = "USUARIO YA EXISTE, PRUEBA RECUPERAR CONTRASEÑA";
+        txt.text = "el usuario ya existe";
       }
     } catch (e) {
       print(e);
