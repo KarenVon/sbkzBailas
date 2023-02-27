@@ -1,5 +1,5 @@
 
-### Hi! nice to see you and welcome to my first flutter app SBKZ BAILAMOS?👋👩🏻‍💻
+# Hi! nice to see you and welcome to my first flutter app SBKZ BAILAMOS?👋👩🏻‍💻
 
 I'm Karen, actuall student of DAM (2nd year) from Spain 🇪🇸, based in Madrid 📍.
 
@@ -12,7 +12,7 @@ On the other hand, you only need to register if you are an organizer and want to
 In the coming months I would like to work on the option for users to be able to purchase their tickets through the application and for this it will be necessary for them to register.
 
 
-# Why have I decided to develop this application?
+#### Why have I decided to develop this application?
 well... my biggest hobby has always been dancing, and dancing has always been present in my life in one way or another. Currently and for 5 years, I am a kizomba teacher with my partner and in the last two years we have been lucky enough to participate in many national and international events during the weekends. In this area, I have realized that the applications that are currently used to manage events do not have a mobile application and I think it would be very interesting for the public to have a mobile app with all the necessary information, because today everyone uses their mobile for most of the procedures. Therefore, by uniting my hobie with my current profession and the needs of the people, it occurred to me to develop this application
 
 Thanks for your attention,
