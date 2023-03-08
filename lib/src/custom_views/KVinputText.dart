@@ -15,6 +15,7 @@ class KVInputText extends StatelessWidget{
   late TextFormField formField;
   final TextEditingController textEditingController;
 
+
   KVInputText ({Key? key,
     this.sValorInicial="",
     this.iLongitudPalabra=20,
@@ -22,7 +23,7 @@ class KVInputText extends StatelessWidget{
     this.sTitulo="",
     this.validator,
     this.icIzq= const Icon(Icons.account_circle_outlined),
-    this.blIsPasswordInput=false, required this.textEditingController}) : super (key:key);
+    this.blIsPasswordInput=false, required this.textEditingController,}) : super (key:key);
 
 
 
@@ -31,13 +32,10 @@ class KVInputText extends StatelessWidget{
     return formField.controller?.text.toString();
   }
 
-  var _formkey = GlobalKey<FormState>();
-
 
   @override
   Widget build(BuildContext context) {
     formField= TextFormField(
-      key: _formkey,
       controller: textEditingController,
       validator: this.validator,
       cursorColor: Colors.cyan,

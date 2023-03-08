@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:sbk_bailas/src/fb_objects/EventsInfo.dart';
 import 'package:sbk_bailas/src/singleton/DataHolder.dart';
 
+/*Vista que nos muestra el eventos seleccionado desde la vista Eventos_view
+* en esta vista podemos ver más detalles sobre el evento y además tiene un
+* custom scroll view que hace que se carge la imagen en la parte superior de la pantalla
+* y que se pueda deslizar la info del evento*/
+
 class Selected_Event extends StatefulWidget {
   
   final EventsInfo selectedEventInfo;
@@ -160,52 +165,6 @@ class _evento extends State<Selected_Event> {
               ),
             ),
             ],
-
-    /*
-        )
-        SingleChildScrollView(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(
-                  top: 25, bottom: 20, left: 10, right: 10),
-              margin: EdgeInsets.fromLTRB(7, 7, 7, 7),
-              alignment: Alignment.center,
-              child: Text(
-                  style: const TextStyle(
-                    fontFamily: 'rcBold',
-                    fontSize: 18,
-                  ),
-                  "${widget.selectedEventInfo.description}"),
-            ),
-            Container(
-              padding: const EdgeInsets.only(
-                  top: 15, bottom: 20, left: 10, right: 10),
-              margin: EdgeInsets.fromLTRB(7, 7, 7, 7),
-              alignment: Alignment.center,
-              child: Text(
-                  style: const TextStyle(
-                    fontFamily: 'rcBold',
-                    fontSize: 18,
-                  ),
-                  "${widget.selectedEventInfo.date}"),
-            ),
-            Container(
-              padding: const EdgeInsets.only(
-                  top: 15, bottom: 200, left: 10, right: 10),
-              margin: EdgeInsets.fromLTRB(7, 7, 7, 7),
-              alignment: Alignment.center,
-              child: Text(
-                  style: const TextStyle(
-                    fontFamily: 'rcBold',
-                    fontSize: 18,
-                  ),
-                  "${widget.selectedEventInfo.price}"),
-            ),
-          ],
-        ),
-        ),*/
     ),
     );
   }

@@ -7,6 +7,9 @@ import 'package:sbk_bailas/src/login_views/Register_View.dart';
 import '../Custom_views/KVinputText.dart';
 import 'TermsOfUse.dart';
 
+/*Vista desde donde los organizadores puedes logearse para crear eventos,
+* en esta vista estan los terminos de uso, política y privacidad*/
+
 class Login_View extends StatelessWidget {
   Login_View({Key? key}) : super(key: key);
 
@@ -35,9 +38,8 @@ class Login_View extends StatelessWidget {
     Navigator.push(context, MaterialPageRoute(builder: (_) => Register_View()));
   }
 
-  @override
   final _formkey = GlobalKey<FormState>();
-
+  @override
   Widget build(BuildContext context) {
     //subo aqui arriba los inputText para poder usarlos en el loginpressed
     KVInputText inputUser = KVInputText(
@@ -46,7 +48,6 @@ class Login_View extends StatelessWidget {
         sTitulo: 'USUARIO',
         icIzq: const Icon(Icons.account_circle_outlined),
         textEditingController: TextEditingController(),
-
         validator: (String? value) {
           if (value!.isEmpty ||
               !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(value)) {

@@ -7,6 +7,10 @@ import '../fb_objects/EventsInfo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+/*Vista del organizador desde donde puede crear eventos para que se carguen en firebase,
+* es necesario que el evento tenga una foto para que se pueda subir a firebase.
+* Solamente aquellas personas que sean organizadoras y quieran subir un evento deben
+* registrarse como usuario*/
 class Orga_View extends StatefulWidget {
   const Orga_View({Key? key}) : super(key: key);
 
@@ -50,6 +54,7 @@ class _organizador extends State<Orga_View> {
       icIzq: Icon(Icons.image),
       textEditingController: TextEditingController());
 
+
   bool _isButtonDisabled=true;
 
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -62,7 +67,6 @@ class _organizador extends State<Orga_View> {
     await db.collection("eventos").add(evento.toFirestore());
 
   }
-
   String imageUrl = '';
 
   @override

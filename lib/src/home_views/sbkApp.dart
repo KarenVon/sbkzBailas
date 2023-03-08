@@ -4,6 +4,7 @@ import 'package:sbk_bailas/src/Home_Views/Conocenos_View.dart';
 import 'package:sbk_bailas/src/Home_Views/Eventos_View.dart';
 import 'package:sbk_bailas/src/login_views/Login_View.dart';
 
+/*Vista desde donde se van mostrando las diferentes vista del navigationBar*/
 class sbkApp extends StatefulWidget {
   @override
   _sbkApp createState() => _sbkApp();
@@ -18,13 +19,15 @@ class _sbkApp extends State<sbkApp> {
     Login_View(),
     Center(child: Text('Chat', style: TextStyle(fontSize: 60))),
     Center(child: Text('Consultas', style: TextStyle(fontSize: 60))),
+    //Register_View(),
   ];
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-      home: Scaffold(
+    //return MaterialApp(
+      //home:
+     return Scaffold(
         body: screens[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -58,9 +61,13 @@ class _sbkApp extends State<sbkApp> {
               icon: Icon(Icons.ad_units),
               label: 'Contacta',
             ),
+            //BottomNavigationBarItem(
+            //  icon: Icon(Icons.ad_units),
+            //  label: 'Contacta',
+            //),
           ],
         ),
-      ),
+      //),
     );
   }
 }

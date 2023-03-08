@@ -3,6 +3,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/*Vista que nos muestra un breve resumen sobre quienes somos*/
+
 class Conocenos_View extends StatefulWidget {
   @override
   _conocenos createState() => _conocenos();

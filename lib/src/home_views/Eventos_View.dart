@@ -7,6 +7,9 @@ import 'package:sbk_bailas/src/home_views/Selected_Event.dart';
 import '../Grid_views/RoomCard.dart';
 import '../fb_objects/EventsInfo.dart';
 
+/*Vista que nos muestra todos los eventos que están creados y guardados en firebase
+* esta creado con un grid view que meustra la imagen del evento que esta en firebase
+* y el nnombre del evento, cuando hago click en un evento me llega a Selected_event*/
 class Eventos_View extends StatefulWidget {
 
   @override

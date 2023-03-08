@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../singleton/DataHolder.dart';
 
+
+/*Splash view con el logo, antes de iniciarse la app*/
+
 class SVLogoWait extends StatefulWidget{
 
   //para poder cambiar el logo
