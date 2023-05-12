@@ -1,8 +1,11 @@
 
 
+import 'dart:js_util';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sbk_bailas/src/custom_widgets/AnimSearchBar.dart';
 import 'package:sbk_bailas/src/home_views/Selected_Event.dart';
 import '../Grid_views/RoomCard.dart';
 import '../fb_objects/EventsInfo.dart';
@@ -21,9 +24,10 @@ class Eventos_View extends StatefulWidget {
 
 class _eventos extends State<Eventos_View> {
   FirebaseFirestore db = FirebaseFirestore.instance;
-  String sNombre = "---";
+  String sNombre = "";
 
   List<EventsInfo> nexteventsList= [];
+  
 
   @override
   void initState() {
@@ -39,6 +43,11 @@ class _eventos extends State<Eventos_View> {
         toFirestore: (EventsInfo eventsinfo, _) => eventsinfo.toFirestore());
 
     final docsSnap = await docRef.get();
+
+  //queries:
+    final salsaQuery = docRef.where("type", isEqualTo: "Salsa");
+    final bachataQuery = docRef.where("type", isEqualTo: "Bachata");
+    final kizombaQuery = docRef.where("type", isEqualTo: "Kizomba");
 
     setState(() {
       for (int i = 0; i < docsSnap.docs.length; i++) {
@@ -67,6 +76,7 @@ class _eventos extends State<Eventos_View> {
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         shadowColor: Colors.black26,
     );
+    final _seachController = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -75,24 +85,39 @@ class _eventos extends State<Eventos_View> {
           actions: <Widget>[
             TextButton(
               style: style,
-              onPressed: () {},
-              child: const Text('Salsa'),
+              onPressed: (){},
+
+              child: const Text('| SALSA |'),
             ),
             TextButton(
               style: style,
               onPressed: () {},
-              child: const Text('Bachata'),
+              child: const Text('| BACAHATA |'),
             ),
             TextButton(
               style: style,
               onPressed: () {},
-              child: const Text('Kizomba'),
+              child: const Text('| KIZOMBA |'),
             ),
+            IconButton(icon: Icon(Icons.notifications_none),
+                onPressed: (){
+
+             },)
           ],
         ),
-      body: Center(
-        child:
-        GridView.builder(
+      body: Column(
+        children: <Widget>[
+          AnimSearchBar(
+              width: 400,
+              textController: _seachController,
+              onSuffixTap: {
+                setState((){
+          }
+                )
+          }, onSubmitted: (String ) {  },
+          ),
+          Expanded(
+            child: GridView.builder(
             scrollDirection: Axis.vertical,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -106,8 +131,13 @@ class _eventos extends State<Eventos_View> {
               );
             }
         ),
+          // !_searchBoolean ? _defaultListView() : _searchListView()
+        //como hago para que por defecto carguen todos pero si uso el buscador que solo me cargue la busqueda
       ),
+      ],
+    ),
     );
+
   }
 }
 
