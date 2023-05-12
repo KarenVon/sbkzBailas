@@ -51,7 +51,7 @@ class _eventos extends State<Eventos_View> {
     print("DEBUG: " + index.toString());
     print("DEBUG: " + nexteventsList[index].name!);
     //DataHolder().selectedEvent = eventosBD[index];
-   // print(DataHolder().selectedEvent);
+    // print(DataHolder().selectedEvent);
 
     //DataHolder().selectedEvent = nexteventsList[index];
     //Navigator.of(context).pushNamed("/evento");
@@ -60,16 +60,42 @@ class _eventos extends State<Eventos_View> {
     => Selected_Event(selectedEventInfo: nexteventsList[index],)));
   }
 
+
   @override
   Widget build(BuildContext context) {
+    final ButtonStyle style = TextButton.styleFrom(
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        shadowColor: Colors.black26,
+    );
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.cyan,
+        foregroundColor: CupertinoColors.white,
+          actions: <Widget>[
+            TextButton(
+              style: style,
+              onPressed: () {},
+              child: const Text('Salsa'),
+            ),
+            TextButton(
+              style: style,
+              onPressed: () {},
+              child: const Text('Bachata'),
+            ),
+            TextButton(
+              style: style,
+              onPressed: () {},
+              child: const Text('Kizomba'),
+            ),
+          ],
+        ),
       body: Center(
         child:
         GridView.builder(
-            scrollDirection: Axis.horizontal,
+            scrollDirection: Axis.vertical,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
+              crossAxisCount: 2,
             ),
             itemCount: nexteventsList.length,
             itemBuilder: (BuildContext context, int index) {

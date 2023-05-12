@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../Custom_views/KVinputText.dart';
+import '../Custom_widgets/KVinputText.dart';
 import '../fb_objects/EventsInfo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -107,7 +107,7 @@ class _organizador extends State<Orga_View> {
                   String uniqueFileName =
                       DateTime.now().millisecondsSinceEpoch.toString();
 
-                  /*Step 2: uploas to Firebae storage
+                  /*Step 2: upload to Firebae storage
                     * Install farebase_storage: flutter pub add firebase_storage
                     * import the corresponding library: import 'package:firebase_storage/firebase_storage.dart';*/
                   //Get a reference to storage root

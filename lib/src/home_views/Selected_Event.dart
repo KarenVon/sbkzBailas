@@ -80,7 +80,7 @@ class _evento extends State<Selected_Event> {
                   Container(
                     padding: const EdgeInsets.only(
                         top: 15, bottom: 2, left: 10, right: 10),
-                    child: const Text ('DESCRIPCIÓN',
+                    child: const Text ('DESCRIPCIÓN:',
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -104,6 +104,34 @@ class _evento extends State<Selected_Event> {
                         //shadows: [Shadow(color: Colors.white, blurRadius: 10)]
                         ),
                         "${widget.selectedEventInfo.description}"),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        top: 15, bottom: 2, left: 10, right: 10),
+                    child: const Text ('TIPO EVENTO:',
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
+                          decoration: TextDecoration.underline,
+                          shadows: [Shadow(color: Colors.cyan, blurRadius: 2)]
+                      ),),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        top: 0, bottom: 5, left: 10, right: 10),
+                    margin: EdgeInsets.fromLTRB(7, 7, 7, 7),
+                    alignment: Alignment.center,
+                    child: Text(
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          //decoration: TextDecoration.underline,
+                          //shadows: [Shadow(color: Colors.white, blurRadius: 10)]
+                        ),
+                        "${widget.selectedEventInfo.type}"),
                   ),
                   Container(
                     padding: const EdgeInsets.only(
@@ -136,7 +164,7 @@ class _evento extends State<Selected_Event> {
                   Container(
                     padding: const EdgeInsets.only(
                         top: 5, bottom: 2, left: 10, right: 10),
-                    child: const Text ('ENTRADAS:',
+                    child: const Text ('PRECIO:',
                       style: const TextStyle(
                           color: Colors.black,
                           fontSize: 20,

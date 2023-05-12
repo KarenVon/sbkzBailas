@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../Custom_views/KVinputText.dart';
+import '../Custom_widgets/KVinputText.dart';
 import '../Home_Views/Orga_View.dart';
 
 
