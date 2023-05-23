@@ -1,7 +1,5 @@
 
 
-import 'dart:js_util';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +24,16 @@ class _eventos extends State<Eventos_View> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   String sNombre = "";
 
+  //Listas para las descargas de firbase
+  List<EventsInfo> totalEvents= [];
   List<EventsInfo> nexteventsList= [];
-  
+  List<EventsInfo> temp = [];
+  List<EventsInfo> kizomba = [];
+  List<EventsInfo> Salsa = [];
+  List<EventsInfo> Bachata = [];
+
+  //Usado para el buscador
+  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -37,37 +43,106 @@ class _eventos extends State<Eventos_View> {
 
   //llamada a firestore para descargar la lista de eventos para ello creo el objeto NextEvents
   void getEventosList() async {
-
     final docRef = db.collection("eventos").
     withConverter(fromFirestore: EventsInfo.fromFirestore,
         toFirestore: (EventsInfo eventsinfo, _) => eventsinfo.toFirestore());
 
     final docsSnap = await docRef.get();
 
-  //queries:
-    final salsaQuery = docRef.where("type", isEqualTo: "Salsa");
-    final bachataQuery = docRef.where("type", isEqualTo: "Bachata");
-    final kizombaQuery = docRef.where("type", isEqualTo: "Kizomba");
-
+    for (int i = 0; i < docsSnap.docs.length; i++) {
+      totalEvents.add(docsSnap.docs[i].data());
+    }
     setState(() {
-      for (int i = 0; i < docsSnap.docs.length; i++) {
-        nexteventsList.add(docsSnap.docs[i].data());
-      }
+      nexteventsList.clear();
+      nexteventsList.addAll(totalEvents);
     });
   }
 
   void listItemShortClicked(int index) {
     print("DEBUG: " + index.toString());
     print("DEBUG: " + nexteventsList[index].name!);
-    //DataHolder().selectedEvent = eventosBD[index];
-    // print(DataHolder().selectedEvent);
-
-    //DataHolder().selectedEvent = nexteventsList[index];
-    //Navigator.of(context).pushNamed("/evento");
 
     Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
     => Selected_Event(selectedEventInfo: nexteventsList[index],)));
   }
+
+  //llamada a firebase para descargar eventos Kizomba
+  void getEventosKizomba() async {
+/*
+    final docRef = db.collection("eventos").where("type", isEqualTo: "Kizomba").
+    withConverter(fromFirestore: EventsInfo.fromFirestore,
+        toFirestore: (EventsInfo eventsinfo, _) => eventsinfo.toFirestore());
+
+    final docsSnap = await docRef.get();
+
+    setState(() {
+      for (int i = 0; i < docsSnap.docs.length; i++) {
+        // kizombaevents
+        nexteventsList.add(docsSnap.docs[i].data());
+        print(docsSnap.docs[i].data().date);
+      }
+    }
+    );*/
+
+
+    //temp.addAll(nexteventsList);
+    kizomba.clear();
+    for(var evento in totalEvents) {
+
+      if(evento.type!.compareTo("Kizomba") == 0) {
+        kizomba.add(evento);
+      }
+    }
+    setState(() {
+      nexteventsList.clear();
+      nexteventsList.addAll(kizomba);
+    });
+
+  }
+
+  //lamada a firebase para descargar eventos salsa
+  void getEventosSalsa() async {
+
+    Salsa.clear();
+    for(var evento in totalEvents) {
+
+      if(evento.type!.compareTo("Salsa") == 0) {
+        Salsa.add(evento);
+      }
+    }
+    setState(() {
+      nexteventsList.clear();
+      nexteventsList.addAll(Salsa);
+    });
+
+  }
+  //llamada a firebase para descargar eventos bachata
+  void getEventosBachata() async {
+
+    Bachata.clear();
+    for(var evento in totalEvents) {
+      if(evento.type!.compareTo("Bachata") == 0) {
+        Bachata.add(evento);
+      }
+    }
+    setState(() {
+      nexteventsList.clear();
+      nexteventsList.addAll(Bachata);
+    });
+  }
+
+/*
+  void filtrarLista(String texto) {
+    List<EventsInfo> EventosFiltrar = [];
+    setState(() {
+      nexteventsList = EventosFiltrar
+          .where((name) => name['name']
+          .toString()
+          .toLowerCase()
+          .contains(texto.toLowerCase()))
+          .toList();
+    });
+  }*/
 
 
   @override
@@ -85,24 +160,42 @@ class _eventos extends State<Eventos_View> {
           actions: <Widget>[
             TextButton(
               style: style,
-              onPressed: (){},
+              onPressed: (){
+                //getEventosList();
+                Bachata.clear();
+                Salsa.clear();
+                kizomba.clear();
+                nexteventsList.clear();
+                nexteventsList.addAll(totalEvents);
+              },
+              child: const Text('| TODOS |'),
+            ),
+            TextButton(
+              style: style,
+              onPressed: (){
 
+                getEventosSalsa();
+              },
               child: const Text('| SALSA |'),
             ),
             TextButton(
               style: style,
-              onPressed: () {},
+              onPressed: () {
+
+                getEventosBachata();
+              },
               child: const Text('| BACAHATA |'),
             ),
             TextButton(
               style: style,
-              onPressed: () {},
+              onPressed: () {
+
+                getEventosKizomba();
+              },
               child: const Text('| KIZOMBA |'),
             ),
             IconButton(icon: Icon(Icons.notifications_none),
-                onPressed: (){
-
-             },)
+                onPressed: (){ },)
           ],
         ),
       body: Column(

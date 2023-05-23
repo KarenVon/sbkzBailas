@@ -1,18 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sbk_bailas/src/Home_Views/Eventos_View.dart';
+import '../NotificationController.dart';
 import '../initial_views/Login_View.dart';
 
 
 /*Vista desde donde se van mostrando las diferentes vista del navigationBar*/
 class sbkApp extends StatefulWidget {
+  // The navigator key is necessary to navigate using static methods
+  static final GlobalKey<NavigatorState> navigatorKey =
+  GlobalKey<NavigatorState>();
+
   @override
   _sbkApp createState() => _sbkApp();
 }
 
 class _sbkApp extends State<sbkApp> {
-  int currentIndex = 0;
 
+
+
+  //navigation bar:
+  int currentIndex = 0;
   final screens = [
     Eventos_View(),
     Login_View(),
