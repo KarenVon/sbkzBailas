@@ -78,12 +78,6 @@ class Login_View extends StatelessWidget {
         child:ListView(
         children: [
           Container(
-            //padding: const EdgeInsets.all(5),
-            //margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-            alignment: Alignment.center,
-            child: Image.asset('assets/abrazo.png'),
-          ),
-          Container(
             alignment: Alignment.bottomCenter,
             padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
             margin: const EdgeInsets.fromLTRB(10, 15, 10, 10),
@@ -117,10 +111,14 @@ class Login_View extends StatelessWidget {
             ),
           ),
           Container(
+            alignment: Alignment.bottomCenter,
+            padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
+            margin: const EdgeInsets.fromLTRB(10, 15, 10, 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
+
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.cyan),
                       textStyle: MaterialStateProperty.all(

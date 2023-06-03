@@ -1,152 +1,71 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../Custom_widgets/KVinputText.dart';
-import '../Home_Views/Orga_View.dart';
+import 'package:http/http.dart' as http;
 
 
 /*Vista desde donde los organizadores pueden registrarse para crear eventos*/
 
-class Register_View extends StatelessWidget {
-  Register_View({Key? key}) : super(key: key);
+class Register_View extends StatefulWidget {
+  @override
+  _Register createState() => _Register();
+}
 
-  KVInputText inputUser =KVInputText(
-    iLongitudPalabra: 50,
-    sHelperText: 'introduzca usuario',
-    sTitulo: 'USUARIO',
-    icIzq: Icon(Icons.account_circle_outlined),
-    textEditingController: TextEditingController(),
-    validator: (String? value) {
-      if (value!.isEmpty ||
-          !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(value)) {
-        return "EMAIL NO VALIDO";
-      } else {
-        return null;
-      }
-    },
-  );
+class _Register extends State<Register_View>{
+  final controllerName = TextEditingController();
+  final controllerMail = TextEditingController();
+  final controllerMessage = TextEditingController();
 
-  KVInputText inputPass = KVInputText(
-      iLongitudPalabra: 20,
-      sHelperText: 'introduzca una contraseña',
-      sTitulo: 'CONTRASEÑA',
-      icIzq: Icon(Icons.password),
-      blIsPasswordInput: true,
-      textEditingController: TextEditingController(),
-      validator: (String? value) {
-        print("---------->>>>>>>>>>>>>>>!!!!!!!!!!!!!!!!!!!!! ");
-        if (value!.isEmpty || value.length!<6 ) {
-          return "CONTRASEÑA INCORRECTA";
-        } else {
-          return null;
-        }
-      }
-  );
-
-  KVInputText inputPassBis = KVInputText(
-    iLongitudPalabra: 20,
-    sHelperText: 'repita la contraseña',
-    sTitulo: 'REPITA CONTRASEÑA',
-    icIzq: Icon(Icons.password),
-    blIsPasswordInput: true,
-    textEditingController: TextEditingController(),
-  );
-
-  var txt = TextEditingController();
-
-
-
-  Future<void> registerPressed(
-      String emailAddress, String password, BuildContext context) async {
-    try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailAddress,
-        password: password,
-      );
-      //si se registra correctamente --> vista de organizador (insertar evento)
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Orga_View()));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        txt.text = "el usuario ya existe";
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  final formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    //subo aqui arriba los inputText para poder usarlos en el loginpressed
-
 
     return Scaffold(
-
-      body:Form(
-        key: formkey,
-        child: ListView(
+      backgroundColor: Colors.white,
+      body:SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 100.0),
-              child: const Text(
-                'Si eres organizador y quieres promocionar tu evento...\n '
-                    '¡Registrate aquí!.\n\n',
-                style: TextStyle(
-                  fontFamily: AutofillHints.familyName,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.cyan,
-                ),
-                textAlign: TextAlign.center,
-              ),
+              //padding: const EdgeInsets.all(5),
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+              alignment: Alignment.center,
+              child:ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset('assets/abrazo.png',
+                  fit: BoxFit.cover,
+              width: 2000,
+              colorBlendMode: BlendMode.darken,),
             ),
-            Container(
-              alignment: Alignment.bottomCenter,
-              padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
-              margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-              decoration: BoxDecoration(
-                color: Colors.cyan,
-                border: Border.all(color: Colors.cyan, width: 8),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  inputUser,
-                  inputPass,
-                  inputPassBis,
-                ],
-              ),
             ),
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.cyan),
-                        textStyle: MaterialStateProperty.all(
-                            TextStyle(fontSize: 15, color: Colors.white))),
-                    onPressed: () {
-                      // Respond to button press
-                      if (inputPass.getText() == inputPassBis.getText()) {
-                        registerPressed(
-                            inputUser.getText()!, inputPass.getText()!, context);
-                      } else {
-                        txt.text = "ERROR : las constraseñas no coinciden";
-                      }
-                      //Navigator.push(context, MaterialPageRoute(builder: (_) => const Orga_View()));
-                    },
-                    child: Text("REGISTRARME"),
-                    //  style: TextStyle(color: Colors.cyan),
-                  ),
-                ],
+            const Text('Dejanos tus datos y nos pondremos en contacto contigo lo antes posible:\n',
+              style: TextStyle(fontSize: 14,
+                  color: Colors.cyan),),
+            buildTextField(title: 'NOMBRE', controller: controllerName),
+            const SizedBox(height: 10),
+            buildTextField(title: 'EMAIL', controller: controllerMail),
+            const SizedBox(height: 10),
+            buildTextField(
+                title: 'MENSAJE',
+                controller: controllerMessage,
+                maxLines: 4),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.cyan,
+                foregroundColor: Colors.white,
+                minimumSize: Size.fromHeight(50),
+                shape: RoundedRectangleBorder(),
+                textStyle: const TextStyle(fontSize: 14,
+                    fontWeight: FontWeight.bold,),
+              ),
+              child: Text('ENVIAR'),
+              onPressed: () => sendEmail(
+                name: controllerName.text,
+                mail: controllerMail.text,
+                message: controllerMessage.text,
               ),
             ),
           ],
@@ -154,4 +73,68 @@ class Register_View extends StatelessWidget {
       ) ,
     );
   }
-}
+
+  Future sendEmail({
+    required String name,
+    required String mail,
+    required String message,
+  }) async {
+    final serviceId='service_gne2daf';
+    final templateId ='template_nuwjzdg';
+    final userId ='1AwfFDmLz3aol-Yf8';
+
+    final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+    final response = await http.post(
+        url,
+        headers: {
+          'origin': 'http://localhost',
+          'Content-type': 'application/json',
+        },
+        body: json.encode({
+          'service_id': serviceId,
+          'template_id': templateId,
+          'user_id': userId,
+          'template_params': {
+            'user_name': name,
+            'user_email': mail,
+            'user_message': message,
+          }
+        }),
+        );
+    print(response.body);
+    }
+  }
+
+Widget buildTextField({required String title,
+required TextEditingController controller, int maxLines =1,
+}) =>
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold,
+              color: Colors.cyan),
+        ),
+        const SizedBox(height: 0),
+        TextField(
+          cursorColor: Colors.cyan,
+          controller: controller,
+          maxLines: maxLines,
+          decoration: const InputDecoration(
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.black38)
+            ),
+            focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.cyan)
+            ),
+            suffixIconColor: Colors.cyan,
+
+
+
+
+
+          ),
+        )
+      ],
+    );
