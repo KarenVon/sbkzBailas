@@ -8,6 +8,7 @@ class EventsInfo {
   final String? price;
   final String? image;
   final String? type;
+  final Set<String>? palnombre;
 
   EventsInfo( {
     this.name="",
@@ -16,7 +17,8 @@ class EventsInfo {
     this.price="",
     this.uid="",
     this.image="",
-    this.type=""
+    this.type="",
+    this.palnombre= const {}
   });
   factory EventsInfo.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -30,7 +32,8 @@ class EventsInfo {
         price: data? ['price'],
         image: data? ['image'],
         type: data? ['type'],
-        uid: snapshot.id
+        uid: snapshot.id,
+        palnombre: data? ['palnombre'] ?? ['name'].toString().split(" ").toSet()
     );
   }
 
@@ -42,6 +45,7 @@ class EventsInfo {
       if (price != null) "price": price,
       if (image != null) "image": image,
       if (type != null) "type": type,
+      if (name != null) "palnombre": name?.split(" ").toList()
     };
   }
 }

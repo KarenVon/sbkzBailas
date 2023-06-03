@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sbk_bailas/src/custom_widgets/AnimSearchBar.dart';
@@ -12,6 +13,7 @@ import '../fb_objects/EventsInfo.dart';
 * esta creado con un grid view que meustra la imagen del evento que esta en firebase
 * y el nnombre del evento, cuando hago click en un evento me llega a Selected_event*/
 class Eventos_View extends StatefulWidget {
+  late final EventsInfo filtroEvento;
 
   @override
   State<StatefulWidget> createState() {
@@ -23,25 +25,37 @@ class Eventos_View extends StatefulWidget {
 class _eventos extends State<Eventos_View> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   String sNombre = "";
+  late final String text;
 
   //Listas para las descargas de firbase
   List<EventsInfo> totalEvents= [];
   List<EventsInfo> nexteventsList= [];
   List<EventsInfo> temp = [];
   List<EventsInfo> kizomba = [];
-  List<EventsInfo> Salsa = [];
-  List<EventsInfo> Bachata = [];
+  List<EventsInfo> salsa = [];
+  List<EventsInfo> bachata = [];
+  List<EventsInfo> busquedaEventos = [];
 
-  //Usado para el buscador
-  TextEditingController _controller = TextEditingController();
+  //El Controller para la barra de búsqueda
+  final TextEditingController _searchController = TextEditingController();
+
 
   @override
   void initState() {
     super.initState();
+    //obtiene la lista de todos los eventos
     getEventosList();
+    //El listener de la barra de búsqueda
+    //_searchController.addListener(_onSearchChanged);
+  }
+ //la función para el listener
+  _onSearchChanged(){
+    print(_searchController.text);
+    searchResultList();
   }
 
-  //llamada a firestore para descargar la lista de eventos para ello creo el objeto NextEvents
+
+  //llamada a firestore para descargar la lista de eventos para ello creo el objeto totalEventos
   void getEventosList() async {
     final docRef = db.collection("eventos").
     withConverter(fromFirestore: EventsInfo.fromFirestore,
@@ -68,22 +82,6 @@ class _eventos extends State<Eventos_View> {
 
   //llamada a firebase para descargar eventos Kizomba
   void getEventosKizomba() async {
-/*
-    final docRef = db.collection("eventos").where("type", isEqualTo: "Kizomba").
-    withConverter(fromFirestore: EventsInfo.fromFirestore,
-        toFirestore: (EventsInfo eventsinfo, _) => eventsinfo.toFirestore());
-
-    final docsSnap = await docRef.get();
-
-    setState(() {
-      for (int i = 0; i < docsSnap.docs.length; i++) {
-        // kizombaevents
-        nexteventsList.add(docsSnap.docs[i].data());
-        print(docsSnap.docs[i].data().date);
-      }
-    }
-    );*/
-
 
     //temp.addAll(nexteventsList);
     kizomba.clear();
@@ -103,47 +101,76 @@ class _eventos extends State<Eventos_View> {
   //lamada a firebase para descargar eventos salsa
   void getEventosSalsa() async {
 
-    Salsa.clear();
+    salsa.clear();
     for(var evento in totalEvents) {
 
       if(evento.type!.compareTo("Salsa") == 0) {
-        Salsa.add(evento);
+        salsa.add(evento);
       }
     }
     setState(() {
       nexteventsList.clear();
-      nexteventsList.addAll(Salsa);
+      nexteventsList.addAll(salsa);
     });
 
   }
   //llamada a firebase para descargar eventos bachata
   void getEventosBachata() async {
 
-    Bachata.clear();
+    bachata.clear();
     for(var evento in totalEvents) {
       if(evento.type!.compareTo("Bachata") == 0) {
-        Bachata.add(evento);
+        bachata.add(evento);
       }
     }
     setState(() {
       nexteventsList.clear();
-      nexteventsList.addAll(Bachata);
+      nexteventsList.addAll(bachata);
     });
   }
 
-/*
-  void filtrarLista(String texto) {
-    List<EventsInfo> EventosFiltrar = [];
-    setState(() {
-      nexteventsList = EventosFiltrar
-          .where((name) => name['name']
-          .toString()
-          .toLowerCase()
-          .contains(texto.toLowerCase()))
-          .toList();
-    });
-  }*/
+//función de barra de búsqueda
+  void searchResultList() async {
+    busquedaEventos.clear();
+    final documentReference = db.collection("eventos")
+        .where("palnombre", arrayContains: FirebaseAuth.instance.currentUser?.uid)
+        .withConverter(fromFirestore: EventsInfo.fromFirestore,
+        toFirestore: (EventsInfo eventsinfo, _) => eventsinfo.toFirestore());
 
+    final documentoDevuelto = await documentReference.get();
+
+    for (int i = 0; i < documentoDevuelto.docs.length; i++) {
+      busquedaEventos.add(documentoDevuelto.docs[i].data());
+    }
+    setState(() {
+      nexteventsList.clear();
+      nexteventsList.addAll(busquedaEventos);
+    });
+    /*
+    var showResults = [];
+    if(_searchController.text!=""){
+      for(var filtroEventos in totalEvents ){
+        //var palnombre = filtroEventos['palnombre'].toString().toLowerCase();
+        if (widget.filtroEvento.palnombre!.contains(_searchController.text.toLowerCase()))
+        {
+          showResults.add(filtroEventos);
+        }
+      }
+    }
+    else{
+      showResults = List.from(totalEvents);
+    }
+    setState(() {
+      busquedaEventos = showResults;
+    });*/
+  }
+
+@override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +178,6 @@ class _eventos extends State<Eventos_View> {
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         shadowColor: Colors.black26,
     );
-    final _seachController = TextEditingController();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -161,10 +187,10 @@ class _eventos extends State<Eventos_View> {
             TextButton(
               style: style,
               onPressed: (){
-                //getEventosList();
-                Bachata.clear();
-                Salsa.clear();
+                bachata.clear();
+                salsa.clear();
                 kizomba.clear();
+                busquedaEventos.clear();
                 nexteventsList.clear();
                 nexteventsList.addAll(totalEvents);
               },
@@ -194,7 +220,7 @@ class _eventos extends State<Eventos_View> {
               },
               child: const Text('| KIZOMBA |'),
             ),
-            IconButton(icon: Icon(Icons.notifications_none),
+            IconButton(icon: const Icon(Icons.notifications_none),
                 onPressed: (){ },)
           ],
         ),
@@ -202,13 +228,19 @@ class _eventos extends State<Eventos_View> {
         children: <Widget>[
           AnimSearchBar(
               width: 400,
-              textController: _seachController,
+              textController: _searchController,
               onSuffixTap: {
                 setState((){
+                  //searchResultList();
           }
                 )
-          }, onSubmitted: (String ) {  },
+          }, onSubmitted: (string ) {  },
+              color: Colors.cyan[50],
+              helpText: "Inserta nombre del evento...",
+              //autoFocus: true,
+              closeSearchOnSuffixTap: true,
           ),
+
           Expanded(
             child: GridView.builder(
             scrollDirection: Axis.vertical,
@@ -224,8 +256,6 @@ class _eventos extends State<Eventos_View> {
               );
             }
         ),
-          // !_searchBoolean ? _defaultListView() : _searchListView()
-        //como hago para que por defecto carguen todos pero si uso el buscador que solo me cargue la busqueda
       ),
       ],
     ),
