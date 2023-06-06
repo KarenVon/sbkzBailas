@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Custom_widgets/KVinputText.dart';
@@ -11,42 +12,43 @@ import 'package:firebase_storage/firebase_storage.dart';
 * es necesario que el evento tenga una foto para que se pueda subir a firebase.
 * Solamente aquellas personas que sean organizadoras y quieran subir un evento deben
 * registrarse como usuario*/
-class Orga_View extends StatefulWidget {
-  const Orga_View({Key? key}) : super(key: key);
+class CrearEvento_View extends StatefulWidget {
+  const CrearEvento_View({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _organizador();
+    return _crearEvento();
   }
 }
 
-class _organizador extends State<Orga_View> {
+class _crearEvento extends State<CrearEvento_View> {
 
   KVInputText inputNombre = KVInputText(
       iLongitudPalabra: 50,
-      sHelperText: "Escriba el nombre del evento",
+      //sHelperText: "Escriba el nombre del evento",
       sTitulo: "Evento",
       icIzq: Icon(Icons.near_me_rounded),
       textEditingController: TextEditingController());
   KVInputText inputFecha = KVInputText(
       iLongitudPalabra: 30,
-      sHelperText: "Escriba la fecha en la que tendrá lugar",
+      // sHelperText: "Escriba la fecha en la que tendrá lugar",
       sTitulo: "Fecha",
       icIzq: Icon(Icons.calendar_month_rounded),
       textEditingController: TextEditingController());
   KVInputText inputPrecio = KVInputText(
       iLongitudPalabra: 5,
-      sHelperText: "Escriba el precio del fullpass",
+      //sHelperText: "Escriba el precio del fullpass",
       sTitulo: "€",
       icIzq: Icon(Icons.monetization_on),
       textEditingController: TextEditingController());
   KVInputText inputDescripcion = KVInputText(
       iLongitudPalabra: 300,
-      sHelperText: "Escriba una breve descripción del evento",
+      //sHelperText: "Escriba una breve descripción del evento",
       sTitulo: "Descripción",
       icIzq: Icon(Icons.description),
       textEditingController: TextEditingController());
+
   KVInputText inputImagen = KVInputText(
       iLongitudPalabra: 100,
       //sHelperText: "Inserte la imagen de su evento",
@@ -75,14 +77,21 @@ class _organizador extends State<Orga_View> {
 
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: CupertinoColors.white,
-          leading: const Image(image: AssetImage("assets/logo.png")),
-          title: const Text('Añade un Evento'),
-          foregroundColor: Colors.cyan),
-      backgroundColor: Colors.cyan.shade500,
+        backgroundColor: Colors.cyan,
+        leading: const Image(image: AssetImage("assets/logo.png")),
+        title: const Text('AÑADIR UN EVENTO'),
+        foregroundColor: Colors.white,
+        actions: <Widget>[
+          IconButton(icon: const Icon(Icons.login_outlined),
+            onPressed: (){
+              FirebaseAuth.instance.signOut();
+            },)
+        ],
+      ),
+      backgroundColor: Colors.cyan[50],
       body: SingleChildScrollView(
         padding:
-            const EdgeInsets.only(top: 30, bottom: 50, left: 12, right: 12),
+        const EdgeInsets.only(top: 30, bottom: 50, left: 12, right: 12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -99,13 +108,13 @@ class _organizador extends State<Orga_View> {
                     * import the corresponding library*/
                   ImagePicker imagePicker = ImagePicker();
                   XFile? file =
-                      await imagePicker.pickImage(source: ImageSource.gallery);
+                  await imagePicker.pickImage(source: ImageSource.gallery);
                   print('${file?.path}');
 
                   if (file == null) return;
                   //Import dart:core
                   String uniqueFileName =
-                      DateTime.now().millisecondsSinceEpoch.toString();
+                  DateTime.now().millisecondsSinceEpoch.toString();
 
                   /*Step 2: upload to Firebae storage
                     * Install farebase_storage: flutter pub add firebase_storage
@@ -116,7 +125,7 @@ class _organizador extends State<Orga_View> {
 
                   //Create a reference for the image to be stored
                   Reference referenceImageToUpload =
-                      referenceDirImages.child(uniqueFileName);
+                  referenceDirImages.child(uniqueFileName);
 
                   //Handle errors/success
                   try {

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sbk_bailas/src/Home_Views/Orga_View.dart';
+import 'package:sbk_bailas/src/Orga_views/CrearEvento_View.dart';
 import '../custom_widgets/KVinputText.dart';
 import 'Register_View.dart';
 import 'TermsOfUse.dart';
@@ -21,7 +21,7 @@ class Login_View extends StatelessWidget {
           .signInWithEmailAndPassword(email: emailAddress, password: password);
       print("ME HE LOGEADO");
       Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const Orga_View()));
+          context, MaterialPageRoute(builder: (_) => const CrearEvento_View()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('DEBUG: No user found for that email.');
@@ -43,7 +43,7 @@ class Login_View extends StatelessWidget {
     //subo aqui arriba los inputText para poder usarlos en el loginpressed
     KVInputText inputUser = KVInputText(
         iLongitudPalabra: 50,
-        sHelperText: 'introduzca su usuario',
+        //sHelperText: 'introduzca su usuario',
         sTitulo: 'USUARIO',
         icIzq: const Icon(Icons.account_circle_outlined),
         textEditingController: TextEditingController(),
@@ -57,8 +57,8 @@ class Login_View extends StatelessWidget {
         });
     KVInputText inputPass = KVInputText(
         iLongitudPalabra: 20,
-        sHelperText: 'introduzca su contraseña',
-        sTitulo: 'PASSWORD',
+        //sHelperText: 'introduzca su contraseña',
+        sTitulo: 'CONTRASEÑA',
         icIzq: const Icon(Icons.password),
         blIsPasswordInput: true,
         textEditingController: TextEditingController(),
@@ -72,53 +72,63 @@ class Login_View extends StatelessWidget {
         });
 
     return Scaffold(
-      //backgroundColor: Colors.black12,
+      appBar:  AppBar(
+        backgroundColor: Colors.cyan,
+        leading: Image(image: AssetImage("assets/logoSolo.png")),
+        title: const Text('BIENVENIDO ORGANIZAD@R'),
+        foregroundColor: CupertinoColors.white,
+        actions: const [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.cyan[50],
       body: Form(
         key: _formkey,
         child:ListView(
         children: [
           Container(
+            padding: const EdgeInsets.fromLTRB(10, 25, 10, 12),
+            margin: const EdgeInsets.fromLTRB(10, 15, 10, 15),
+            child: Text('¿Eres organizador de eventos de baile?',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontFamily: 'RobotoMono',fontSize: 20, fontWeight: FontWeight.bold,
+                  color: Colors.black),),
+          ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(10, 5, 10, 30),
+            child: const Text('En SBKZ bailamos nos encargamos de gestionar tu evento.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontFamily: 'RobotoMono',fontSize: 12, fontWeight: FontWeight.bold,
+                  color: Colors.black),),
+          ),
+          Container(
             alignment: Alignment.bottomCenter,
-            padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-            margin: const EdgeInsets.fromLTRB(10, 15, 10, 10),
-            decoration: BoxDecoration(
-              color: Colors.cyan,
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
+            margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            /*decoration: BoxDecoration(
+              color: Colors.white,
               border: Border.all(color: Colors.cyan, width: 4),
               borderRadius: BorderRadius.circular(5),
-            ),
+            ),*/
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //los hemos subido arriba, encima del scaffold
                 inputUser,
                 inputPass,
-                TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: () {
-                    print("Registrandome");
-                    //Navigator.of(context).pushNamed('/registroview');
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => Register_View()));
-                  },
-                  child: const Text('Quiero registrarme.'),
-                ),
               ],
             ),
           ),
           Container(
             alignment: Alignment.bottomCenter,
             padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
-            margin: const EdgeInsets.fromLTRB(10, 15, 10, 10),
+            margin: const EdgeInsets.fromLTRB(10, 0, 10, 5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.cyan),
                       textStyle: MaterialStateProperty.all(
@@ -140,6 +150,25 @@ class Login_View extends StatelessWidget {
                 TermsOfUse()
               ],
             ),
+          ),
+          Container(
+
+            child:  TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => Register_View()));
+                },
+                child: const Text('Soy organizador y quiero registrarme o darme de baja.',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,
+                    //shadows: CupertinoContextMenu.kEndBoxShadow,
+                    color: Colors.cyan),),
+              ),
           ),
         ],
       ),

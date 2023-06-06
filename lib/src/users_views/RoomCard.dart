@@ -23,19 +23,6 @@ class RoomCard extends StatelessWidget {
       onTap: () {
         onShortClick(index);
       },
-      /*child: Card(
-        color: Colors.white,
-        child:Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox (child: Image.network(sImgURL),
-              width: 200 ,
-              height: 100 ,
-            ),
-            Text(sName)
-          ],
-        ),
-      ),*/
 
       child: Card(
         clipBehavior: Clip.hardEdge,
@@ -52,14 +39,6 @@ class RoomCard extends StatelessWidget {
                   shadows: [Shadow(color: Colors.black26, blurRadius: 4)]
      ),
             ),
-         /* subtitle: const Text(
-            "Click para más info",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 10,
-                shadows: [Shadow(color: Colors.black, blurRadius: 5)
-          ]),
-        ),*/
         ),
           child: Padding( //Column
             /*mainAxisAlignment: MainAxisAlignment.center,
@@ -74,10 +53,6 @@ class RoomCard extends StatelessWidget {
                 sImgURL,
                 fit: BoxFit.cover,)),
             ),
-              /*SizedBox(child: Image.network(sImgURL),
-                width: 200 ,
-                height: 100 ,
-              ),*/
           ),
         ),
       ),

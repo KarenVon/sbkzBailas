@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sbk_bailas/src/Home_Views/Eventos_View.dart';
-import '../NotificationController.dart';
+import 'package:sbk_bailas/src/users_Views/Eventos_View.dart';
 import '../initial_views/Login_View.dart';
 
 

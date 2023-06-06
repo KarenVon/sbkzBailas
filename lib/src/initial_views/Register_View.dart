@@ -6,7 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 
-/*Vista desde donde los organizadores pueden registrarse para crear eventos*/
+/*Vista desde donde los organizadores pueden solicitur registrarse para
+posteriormente poder crear sus eventos*/
 
 class Register_View extends StatefulWidget {
   @override
@@ -23,7 +24,7 @@ class _Register extends State<Register_View>{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.cyan[50],
       body:SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(

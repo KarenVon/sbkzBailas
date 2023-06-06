@@ -46,15 +46,22 @@ class KVInputText extends StatelessWidget{
       autocorrect: !blIsPasswordInput,
       decoration: InputDecoration(
         icon: this.icIzq,
+        focusColor: Colors.white,
+        iconColor: Colors.cyan,
         labelText: this.sTitulo,
         labelStyle: TextStyle(
-            color: Colors.white
+            color: Colors.cyan, fontWeight: FontWeight.bold,
         ),
         helperText: this.sHelperText,
-        enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: Colors.cyan,),
-            borderRadius: BorderRadius.circular(double.infinity)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.cyan),
+            borderRadius: BorderRadius.circular(12),
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white,),
+            borderRadius: BorderRadius.circular(12),
       ),
+    ),
     );
 
     return formField;

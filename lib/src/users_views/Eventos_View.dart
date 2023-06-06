@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sbk_bailas/src/custom_widgets/AnimSearchBar.dart';
-import 'package:sbk_bailas/src/home_views/Selected_Event.dart';
-import '../Grid_views/RoomCard.dart';
+import '../users_views/RoomCard.dart';
+import '../users_views/Selected_Event.dart';
 import '../fb_objects/EventsInfo.dart';
+import 'AnimSearchBar.dart';
 
 /*Vista que nos muestra todos los eventos que están creados y guardados en firebase
 * esta creado con un grid view que meustra la imagen del evento que esta en firebase
@@ -30,7 +30,7 @@ class _eventos extends State<Eventos_View> {
   //Listas para las descargas de firbase
   List<EventsInfo> totalEvents= [];
   List<EventsInfo> nexteventsList= [];
-  List<EventsInfo> temp = [];
+  //List<EventsInfo> temp = [];
   List<EventsInfo> kizomba = [];
   List<EventsInfo> salsa = [];
   List<EventsInfo> bachata = [];
@@ -39,21 +39,12 @@ class _eventos extends State<Eventos_View> {
   //El Controller para la barra de búsqueda
   final TextEditingController _searchController = TextEditingController();
 
-
   @override
   void initState() {
     super.initState();
     //obtiene la lista de todos los eventos
     getEventosList();
-    //El listener de la barra de búsqueda
-    //_searchController.addListener(_onSearchChanged);
   }
- //la función para el listener
-  _onSearchChanged(){
-    print(_searchController.text);
-    searchResultList();
-  }
-
 
   //llamada a firestore para descargar la lista de eventos para ello creo el objeto totalEventos
   void getEventosList() async {
@@ -65,10 +56,12 @@ class _eventos extends State<Eventos_View> {
 
     for (int i = 0; i < docsSnap.docs.length; i++) {
       totalEvents.add(docsSnap.docs[i].data());
+      busquedaEventos.add(docsSnap.docs[i].data());
     }
     setState(() {
       nexteventsList.clear();
       nexteventsList.addAll(totalEvents);
+      nexteventsList.addAll(busquedaEventos);
     });
   }
 
@@ -130,47 +123,19 @@ class _eventos extends State<Eventos_View> {
   }
 
 //función de barra de búsqueda
-  void searchResultList() async {
-    busquedaEventos.clear();
-    final documentReference = db.collection("eventos")
-        .where("palnombre", arrayContains: FirebaseAuth.instance.currentUser?.uid)
-        .withConverter(fromFirestore: EventsInfo.fromFirestore,
-        toFirestore: (EventsInfo eventsinfo, _) => eventsinfo.toFirestore());
-
-    final documentoDevuelto = await documentReference.get();
-
-    for (int i = 0; i < documentoDevuelto.docs.length; i++) {
-      busquedaEventos.add(documentoDevuelto.docs[i].data());
-    }
+  void searchResultList(String texto) async {
     setState(() {
+      totalEvents = busquedaEventos.where((element) => element.name.
+      toString().toLowerCase().contains(texto.toLowerCase())).toList();
       nexteventsList.clear();
-      nexteventsList.addAll(busquedaEventos);
+      nexteventsList.addAll(totalEvents);
     });
-    /*
-    var showResults = [];
-    if(_searchController.text!=""){
-      for(var filtroEventos in totalEvents ){
-        //var palnombre = filtroEventos['palnombre'].toString().toLowerCase();
-        if (widget.filtroEvento.palnombre!.contains(_searchController.text.toLowerCase()))
-        {
-          showResults.add(filtroEventos);
-        }
-      }
-    }
-    else{
-      showResults = List.from(totalEvents);
-    }
-    setState(() {
-      busquedaEventos = showResults;
-    });*/
+
+
   }
 
 @override
-  void dispose() {
-    _searchController.removeListener(_onSearchChanged);
-    _searchController.dispose();
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +148,7 @@ class _eventos extends State<Eventos_View> {
       appBar: AppBar(
         backgroundColor: Colors.cyan,
         foregroundColor: CupertinoColors.white,
-          actions: <Widget>[
+        actions: <Widget>[
             TextButton(
               style: style,
               onPressed: (){
@@ -220,26 +185,45 @@ class _eventos extends State<Eventos_View> {
               },
               child: const Text('| KIZOMBA |'),
             ),
-            IconButton(icon: const Icon(Icons.notifications_none),
-                onPressed: (){ },)
+           // IconButton(icon: const Icon(Icons.notifications_none),
+      //   onPressed: (){ },)
           ],
         ),
       body: Column(
         children: <Widget>[
-          AnimSearchBar(
+
+          TextField(
+            controller: _searchController,
+            cursorColor: Colors.black,
+            decoration: InputDecoration(
+              prefixIcon: Icon(
+                CupertinoIcons.search,
+                color: Colors.black,
+              ),
+              border: InputBorder.none,
+
+              hintText: ('Inserta nombre del evento...'),
+            ),
+            onChanged: (texto) {
+              searchResultList(texto); // Llama a la función de filtrado cuando el texto cambia
+            },
+          ),
+         /* AnimSearchBar(
               width: 400,
               textController: _searchController,
-              onSuffixTap: {
+              onSuffixTap:(texto) {
+
                 setState((){
                   //searchResultList();
+                  searchResultList(texto);
           }
-                )
+                );
           }, onSubmitted: (string ) {  },
               color: Colors.cyan[50],
               helpText: "Inserta nombre del evento...",
               //autoFocus: true,
               closeSearchOnSuffixTap: true,
-          ),
+          ),*/
 
           Expanded(
             child: GridView.builder(

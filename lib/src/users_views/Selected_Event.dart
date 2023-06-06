@@ -79,14 +79,14 @@ class _evento extends State<Selected_Event> {
                 children: [
                   Container(
                     padding: const EdgeInsets.only(
-                        top: 15, bottom: 2, left: 10, right: 10),
+                        top: 15, bottom: 0, left: 10, right: 10),
                     child: const Text ('DESCRIPCIÓN:',
                       style: const TextStyle(
-                        color: Colors.black,
+                        color: Colors.cyan,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                           letterSpacing: 2,
-                        decoration: TextDecoration.underline,
+                        decoration: TextDecoration.none,
                         shadows: [Shadow(color: Colors.cyan, blurRadius: 2)]
                       ),),
                   ),
@@ -107,14 +107,14 @@ class _evento extends State<Selected_Event> {
                   ),
                   Container(
                     padding: const EdgeInsets.only(
-                        top: 15, bottom: 2, left: 10, right: 10),
+                        top: 2, bottom: 0, left: 10, right: 10),
                     child: const Text ('TIPO EVENTO:',
                       style: const TextStyle(
-                          color: Colors.black,
+                          color: Colors.cyan,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 2,
-                          decoration: TextDecoration.underline,
+                          decoration: TextDecoration.none,
                           shadows: [Shadow(color: Colors.cyan, blurRadius: 2)]
                       ),),
                   ),
@@ -135,14 +135,14 @@ class _evento extends State<Selected_Event> {
                   ),
                   Container(
                     padding: const EdgeInsets.only(
-                        top: 5, bottom: 2, left: 10, right: 10),
+                        top: 2, bottom: 0, left: 10, right: 10),
                     child: const Text ('FECHA:',
                       style: const TextStyle(
-                          color: Colors.black,
+                          color: Colors.cyan,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 2,
-                          decoration: TextDecoration.underline,
+                          decoration: TextDecoration.none,
                           shadows: [Shadow(color: Colors.cyan, blurRadius: 2)]
                       ),),
                   ),
@@ -163,14 +163,14 @@ class _evento extends State<Selected_Event> {
                   ),
                   Container(
                     padding: const EdgeInsets.only(
-                        top: 5, bottom: 2, left: 10, right: 10),
+                        top: 2, bottom: 0, left: 10, right: 10),
                     child: const Text ('PRECIO:',
                       style: const TextStyle(
-                          color: Colors.black,
+                          color: Colors.cyan,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 2,
-                          decoration: TextDecoration.underline,
+                          decoration: TextDecoration.none,
                           shadows: [Shadow(color: Colors.cyan, blurRadius: 2)]
                       ),),
                   ),
