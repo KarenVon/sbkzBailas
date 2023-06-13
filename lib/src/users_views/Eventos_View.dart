@@ -1,7 +1,6 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../users_views/RoomCard.dart';
@@ -33,6 +32,7 @@ class _eventos extends State<Eventos_View> {
   List<EventsInfo> salsa = [];
   List<EventsInfo> bachata = [];
   List<EventsInfo> busquedaEventos = [];
+  List<EventsInfo> todos = [];
 
   //El Controller para la barra de búsqueda
   final TextEditingController _searchController = TextEditingController();
@@ -73,11 +73,8 @@ class _eventos extends State<Eventos_View> {
 
   //llamada a firebase para descargar eventos Kizomba
   void getEventosKizomba() async {
-
-    //temp.addAll(nexteventsList);
     kizomba.clear();
     for(var evento in totalEvents) {
-
       if(evento.type!.compareTo("Kizomba") == 0) {
         kizomba.add(evento);
       }
@@ -86,15 +83,12 @@ class _eventos extends State<Eventos_View> {
       nexteventsList.clear();
       nexteventsList.addAll(kizomba);
     });
-
   }
 
   //lamada a firebase para descargar eventos salsa
   void getEventosSalsa() async {
-
     salsa.clear();
     for(var evento in totalEvents) {
-
       if(evento.type!.compareTo("Salsa") == 0) {
         salsa.add(evento);
       }
@@ -103,11 +97,10 @@ class _eventos extends State<Eventos_View> {
       nexteventsList.clear();
       nexteventsList.addAll(salsa);
     });
-
   }
+
   //llamada a firebase para descargar eventos bachata
   void getEventosBachata() async {
-
     bachata.clear();
     for(var evento in totalEvents) {
       if(evento.type!.compareTo("Bachata") == 0) {
@@ -128,11 +121,15 @@ class _eventos extends State<Eventos_View> {
       nexteventsList.clear();
       nexteventsList.addAll(totalEvents);
     });
-
-
   }
 
-@override
+  //función que vuelve a mostrar todos los eventos
+  void showAllEvents() {
+    setState(() {
+      nexteventsList.clear();
+      nexteventsList.addAll(totalEvents);
+    });
+  }
 
 
   @override
@@ -150,19 +147,13 @@ class _eventos extends State<Eventos_View> {
             TextButton(
               style: style,
               onPressed: (){
-                bachata.clear();
-                salsa.clear();
-                kizomba.clear();
-                busquedaEventos.clear();
-                nexteventsList.clear();
-                nexteventsList.addAll(totalEvents);
+                showAllEvents();
               },
               child: const Text('| TODOS |'),
             ),
             TextButton(
               style: style,
               onPressed: (){
-
                 getEventosSalsa();
               },
               child: const Text('| SALSA |'),
@@ -170,7 +161,6 @@ class _eventos extends State<Eventos_View> {
             TextButton(
               style: style,
               onPressed: () {
-
                 getEventosBachata();
               },
               child: const Text('| BACAHATA |'),
@@ -178,13 +168,10 @@ class _eventos extends State<Eventos_View> {
             TextButton(
               style: style,
               onPressed: () {
-
                 getEventosKizomba();
               },
               child: const Text('| KIZOMBA |'),
             ),
-           // IconButton(icon: const Icon(Icons.notifications_none),
-      //   onPressed: (){ },)
           ],
         ),
       body: Column(
@@ -199,29 +186,12 @@ class _eventos extends State<Eventos_View> {
                 color: Colors.black,
               ),
               border: InputBorder.none,
-
               hintText: ('Inserta nombre del evento...'),
             ),
             onChanged: (texto) {
               searchResultList(texto); // Llama a la función de filtrado cuando el texto cambia
             },
           ),
-         /* AnimSearchBar(
-              width: 400,
-              textController: _searchController,
-              onSuffixTap:(texto) {
-
-                setState((){
-                  //searchResultList();
-                  searchResultList(texto);
-          }
-                );
-          }, onSubmitted: (string ) {  },
-              color: Colors.cyan[50],
-              helpText: "Inserta nombre del evento...",
-              //autoFocus: true,
-              closeSearchOnSuffixTap: true,
-          ),*/
 
           Expanded(
             child: GridView.builder(

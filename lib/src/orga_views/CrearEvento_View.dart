@@ -26,37 +26,31 @@ class _crearEvento extends State<CrearEvento_View> {
 
   KVInputText inputNombre = KVInputText(
       iLongitudPalabra: 50,
-      //sHelperText: "Escriba el nombre del evento",
       sTitulo: "Evento",
       icIzq: Icon(Icons.near_me_rounded),
       textEditingController: TextEditingController());
   KVInputText inputFecha = KVInputText(
       iLongitudPalabra: 30,
-      // sHelperText: "Escriba la fecha en la que tendrá lugar",
       sTitulo: "Fecha: (dd/mm/AA al dd/mm/AA)",
       icIzq: Icon(Icons.calendar_month_rounded),
       textEditingController: TextEditingController());
   KVInputText inputPrecio = KVInputText(
       iLongitudPalabra: 5,
-      //sHelperText: "Escriba el precio del fullpass",
       sTitulo: "€",
       icIzq: Icon(Icons.monetization_on),
       textEditingController: TextEditingController());
   KVInputText inputDescripcion = KVInputText(
       iLongitudPalabra: 300,
-      //sHelperText: "Escriba una breve descripción del evento",
       sTitulo: "Descripción",
       icIzq: Icon(Icons.description),
       textEditingController: TextEditingController());
   KVInputText inputTipo = KVInputText(
       iLongitudPalabra: 300,
-      //sHelperText: "Escriba una breve descripción del evento",
       sTitulo: "Tipo (Salsa, Bachata o Kizomba)",
       icIzq: Icon(Icons.description),
       textEditingController: TextEditingController());
   KVInputText inputImagen = KVInputText(
       iLongitudPalabra: 100,
-      //sHelperText: "Inserte la imagen de su evento",
       sTitulo: "Imagen",
       icIzq: Icon(Icons.image),
       textEditingController: TextEditingController());
@@ -89,6 +83,19 @@ class _crearEvento extends State<CrearEvento_View> {
       print('Evento agregado al usuario exitosamente');
     }
   }
+
+  void resetFields() {
+    inputNombre.textEditingController.clear();
+    inputFecha.textEditingController.clear();
+    inputPrecio.textEditingController.clear();
+    inputTipo.textEditingController.clear();
+    inputDescripcion.textEditingController.clear();
+    inputImagen.textEditingController.clear();
+    setState(() {
+      _isButtonDisabled = true;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +174,6 @@ class _crearEvento extends State<CrearEvento_View> {
             ),
             ElevatedButton(
               onPressed: () async {
-                //print("---------->>>>>>>>> 2222222222"+imageUrl.toString());
                 if (_isButtonDisabled) {
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Debes insertar una imagen')));
@@ -188,7 +194,16 @@ class _crearEvento extends State<CrearEvento_View> {
                       type: itemTipo,
                       image: imageUrl);
 
+                  //función que crea el evento
                   acceptPressed(evento, context);
+
+                  //función que resetea los campos que he rellenado para la creación del evento
+                  resetFields();
+
+                  //mensaje que se muestra en pantalla para notificarme la creación correcta
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Evento creado correctamente')),
+                  );
 
                 }
               },

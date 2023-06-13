@@ -41,7 +41,6 @@ class _evento extends State<Selected_Event> {
 
     setState(() {
       for (int i = 0; i < docSnap.docs.length; i++) {
-        //eventsInfo.add(docSnap.docs[i].data()); //descargar los eventos
       }
     });
   }
@@ -52,7 +51,6 @@ class _evento extends State<Selected_Event> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.cyan,
-          //leading: Icon(Icons.menu),
           leading: const Image(image: AssetImage("assets/logoSolo.png")),
           title: Text("${widget.selectedEventInfo.name}",
             style: const TextStyle(fontFamily: 'RobotoMono'),),
@@ -128,8 +126,6 @@ class _evento extends State<Selected_Event> {
                           color: Colors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          //decoration: TextDecoration.underline,
-                          //shadows: [Shadow(color: Colors.white, blurRadius: 10)]
                         ),
                         "${widget.selectedEventInfo.type}"),
                   ),
@@ -156,8 +152,6 @@ class _evento extends State<Selected_Event> {
                             color: Colors.black,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            //decoration: TextDecoration.underline,
-                           // shadows: [Shadow(color: Colors.black26, blurRadius: 1)]
                         ),
                         "${widget.selectedEventInfo.date}"),
                   ),
@@ -184,8 +178,6 @@ class _evento extends State<Selected_Event> {
                             color: Colors.black,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            //decoration: TextDecoration.underline,
-                            //shadows: [Shadow(color: Colors.cyan, blurRadius: 2)]
                         ),
                         "${widget.selectedEventInfo.price}"),
                   ),

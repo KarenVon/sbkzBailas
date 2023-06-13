@@ -58,7 +58,7 @@ class _organizador extends State<Orga_View> {
                   ),
                   ListTile(
                     leading: const Icon(Icons.remove_circle_outline_rounded),
-                    title: const Text('Eliminar o modificar un evento'),
+                    title: const Text('Eliminar un evento'),
                     onTap: (){
                      Navigator.push(context,
                           MaterialPageRoute(builder: (_) => EventosCreados_View()));
