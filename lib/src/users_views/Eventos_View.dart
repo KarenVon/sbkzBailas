@@ -24,13 +24,11 @@ class Eventos_View extends StatefulWidget {
 
 class _eventos extends State<Eventos_View> {
   FirebaseFirestore db = FirebaseFirestore.instance;
-  String sNombre = "";
   late final String text;
 
   //Listas para las descargas de firbase
   List<EventsInfo> totalEvents= [];
   List<EventsInfo> nexteventsList= [];
-  //List<EventsInfo> temp = [];
   List<EventsInfo> kizomba = [];
   List<EventsInfo> salsa = [];
   List<EventsInfo> bachata = [];

@@ -33,7 +33,7 @@ class _crearEvento extends State<CrearEvento_View> {
   KVInputText inputFecha = KVInputText(
       iLongitudPalabra: 30,
       // sHelperText: "Escriba la fecha en la que tendrá lugar",
-      sTitulo: "Fecha",
+      sTitulo: "Fecha: (dd/mm/AA al dd/mm/AA)",
       icIzq: Icon(Icons.calendar_month_rounded),
       textEditingController: TextEditingController());
   KVInputText inputPrecio = KVInputText(
@@ -48,7 +48,12 @@ class _crearEvento extends State<CrearEvento_View> {
       sTitulo: "Descripción",
       icIzq: Icon(Icons.description),
       textEditingController: TextEditingController());
-
+  KVInputText inputTipo = KVInputText(
+      iLongitudPalabra: 300,
+      //sHelperText: "Escriba una breve descripción del evento",
+      sTitulo: "Tipo (Salsa, Bachata o Kizomba)",
+      icIzq: Icon(Icons.description),
+      textEditingController: TextEditingController());
   KVInputText inputImagen = KVInputText(
       iLongitudPalabra: 100,
       //sHelperText: "Inserte la imagen de su evento",
@@ -66,15 +71,27 @@ class _crearEvento extends State<CrearEvento_View> {
   }
 
   void acceptPressed(EventsInfo evento, BuildContext context) async {
-    await db.collection("eventos").add(evento.toFirestore());
+    var docId = await db.collection("eventos").add(evento.toFirestore());
+
+    // Agregar el ID del evento al usuario
+    addEventToUser(docId.id);
 
   }
   String imageUrl = '';
 
+  void addEventToUser(String eventID) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userDoc = db.collection('perfiles').doc(user.uid);
+      await userDoc.update({
+        'eventosCreados': FieldValue.arrayUnion([eventID]),
+      });
+      print('Evento agregado al usuario exitosamente');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
@@ -82,7 +99,7 @@ class _crearEvento extends State<CrearEvento_View> {
         title: const Text('AÑADIR UN EVENTO'),
         foregroundColor: Colors.white,
         actions: <Widget>[
-          IconButton(icon: const Icon(Icons.login_outlined),
+          IconButton(icon: const Icon(Icons.logout),
             onPressed: (){
               FirebaseAuth.instance.signOut();
             },)
@@ -98,6 +115,7 @@ class _crearEvento extends State<CrearEvento_View> {
             inputNombre,
             inputFecha,
             inputPrecio,
+            inputTipo,
             inputDescripcion,
             Container(
               padding: const EdgeInsets.only(top: 20, bottom: 40),
@@ -158,6 +176,7 @@ class _crearEvento extends State<CrearEvento_View> {
                   String itemNombre = inputNombre.getText()!;
                   String itemFecha = inputFecha.getText()!;
                   String itemPrecio = inputPrecio.getText()!;
+                  String itemTipo = inputTipo.getText()!;
                   String itemDescripcion = inputDescripcion.getText()!;
 
                   //para crear un nuevo evento en firebase usando el objeto evento que hemos creado
@@ -166,11 +185,11 @@ class _crearEvento extends State<CrearEvento_View> {
                       description: itemDescripcion,
                       date: itemFecha,
                       price: itemPrecio,
+                      type: itemTipo,
                       image: imageUrl);
 
-                  acceptPressed(
-                      evento,
-                      context);
+                  acceptPressed(evento, context);
+
                 }
               },
               style: ButtonStyle(

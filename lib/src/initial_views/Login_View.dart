@@ -1,7 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sbk_bailas/src/Orga_views/CrearEvento_View.dart';
+import '../orga_views/Orga_View.dart';
 import '../custom_widgets/KVinputText.dart';
 import 'Register_View.dart';
 import 'TermsOfUse.dart';
@@ -20,8 +21,22 @@ class Login_View extends StatelessWidget {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
       print("ME HE LOGEADO");
+
+      // Obtener el ID del usuario actualmente autenticado
+      final userUid = credential.user!.uid;
+
+    /*  // Crear documento de usuario en Firestore
+      final userDoc = FirebaseFirestore.instance.collection('perfiles').doc(userUid);
+      final userData = {
+        'name': credential.user!.displayName,
+        'eventosCreados': <String>[],
+      };
+      await userDoc.set(userData);
+*/
+
+      //Inicio de sesión realizado y carga la vista del perfil del organizador
       Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const CrearEvento_View()));
+          context, MaterialPageRoute(builder: (_) => const Orga_View()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('DEBUG: No user found for that email.');
@@ -38,6 +53,8 @@ class Login_View extends StatelessWidget {
   }
 
   final _formkey = GlobalKey<FormState>();
+
+
   @override
   Widget build(BuildContext context) {
     //subo aqui arriba los inputText para poder usarlos en el loginpressed
@@ -107,11 +124,6 @@ class Login_View extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
             margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-            /*decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Colors.cyan, width: 4),
-              borderRadius: BorderRadius.circular(5),
-            ),*/
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

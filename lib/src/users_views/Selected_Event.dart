@@ -31,7 +31,7 @@ class _evento extends State<Selected_Event> {
 
   Future<void> descargarEventos() async {
     String path = DataHolder().sCOLLECTION_EVENTOS_INFO +
-        "/" + DataHolder().selectedEvent.uid; //ojo es variable
+        "/" + DataHolder().selectedEvent.eid; //ojo es variable
 
     final docRef = db.collection(path).withConverter(
         fromFirestore: EventsInfo.fromFirestore,

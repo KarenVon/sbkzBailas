@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventsInfo {
-  final String uid;
+  final String eid;
   final String? name;
   final String? description;
   final String? date;
@@ -9,18 +9,16 @@ class EventsInfo {
   final String? image;
   final String? type;
   final String? user;
-  //final Set<String>? palnombre;
 
   EventsInfo( {
     this.name="",
     this.description="",
     this.date="" ,
     this.price="",
-    this.uid="",
+    this.eid="",
     this.image="",
     this.type="",
     this.user="",
-    //this.palnombre= const {}
   });
   factory EventsInfo.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -35,8 +33,7 @@ class EventsInfo {
         image: data? ['image'],
         type: data? ['type'],
         user: data? ['user'],
-        uid: snapshot.id,
-        //palnombre: data? ['palnombre'] ?? ['name'].toString().split(" ").toSet()
+        eid: snapshot.id,
     );
   }
 
@@ -49,7 +46,6 @@ class EventsInfo {
       if (image != null) "image": image,
       if (type != null) "type": type,
       if (type != null) "user": user,
-      //if (name != null) "palnombre": name?.split(" ").toList()
     };
   }
 }
