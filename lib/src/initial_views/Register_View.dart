@@ -18,6 +18,8 @@ class _Register extends State<Register_View>{
   final controllerName = TextEditingController();
   final controllerMail = TextEditingController();
   final controllerMessage = TextEditingController();
+  //para acceder al estado del formulario
+  final _formKey = GlobalKey<FormState>();
 
 
   @override
@@ -27,7 +29,9 @@ class _Register extends State<Register_View>{
       backgroundColor: Colors.cyan[50],
       body:SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Column(
+        child: Form(
+          key: _formKey,
+          child: Column(
           children: [
             Container(
               //padding: const EdgeInsets.all(5),
@@ -72,6 +76,7 @@ class _Register extends State<Register_View>{
           ],
         ),
       ) ,
+    ),
     );
   }
 
@@ -103,8 +108,29 @@ class _Register extends State<Register_View>{
         }),
         );
     print(response.body);
+
+    if (response.statusCode == 200) {
+// Borrar los campos del formulario
+      _formKey.currentState?.reset();
+
+// Mostrar mensaje en pantalla
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Éxito'),
+          content: Text('Tu mensaje se ha enviado correctamente.'),
+          actions: [
+            TextButton(
+              child: Text('OK'),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      );
+    }
     }
   }
+
 
 Widget buildTextField({required String title,
 required TextEditingController controller, int maxLines =1,
@@ -130,10 +156,6 @@ required TextEditingController controller, int maxLines =1,
                 borderSide: BorderSide(color: Colors.cyan)
             ),
             suffixIconColor: Colors.cyan,
-
-
-
-
 
           ),
         )
