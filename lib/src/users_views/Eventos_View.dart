@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import '../users_views/RoomCard.dart';
 import '../users_views/Selected_Event.dart';
 import '../fb_objects/EventsInfo.dart';
-import 'AnimSearchBar.dart';
 
 /*Vista que nos muestra todos los eventos que están creados y guardados en firebase
 * esta creado con un grid view que meustra la imagen del evento que esta en firebase
@@ -59,7 +58,6 @@ class _eventos extends State<Eventos_View> {
     setState(() {
       nexteventsList.clear();
       nexteventsList.addAll(totalEvents);
-      nexteventsList.addAll(busquedaEventos);
     });
   }
 
